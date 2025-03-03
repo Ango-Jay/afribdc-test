@@ -1,4 +1,4 @@
-import { moderateScale, ScaledSheet } from "react-native-size-matters";
+import { ScaledSheet } from "react-native-size-matters";
 
 const globalUtilStyles = ScaledSheet.create({
   // width
