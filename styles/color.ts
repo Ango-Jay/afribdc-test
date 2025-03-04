@@ -21,7 +21,7 @@ export const textColorStyle = StyleSheet.create({
         color: appColors.gray
     },
     error: {
-        color: 'rgba(240, 68, 56, 1)',
+        color: appColors.error
     }
 })
 
@@ -52,6 +52,9 @@ export const borderColorStyle = StyleSheet.create({
     },
     gray: {
         borderColor: appColors.gray
+    },
+    error: {
+        borderColor: appColors.error
     }
 })
 
