@@ -20,6 +20,9 @@ export const textColorStyle = StyleSheet.create({
     gray: {
         color: appColors.gray
     },
+    error: {
+        color: 'rgba(240, 68, 56, 1)',
+    }
 })
 
 export const bgColorStyle = StyleSheet.create({

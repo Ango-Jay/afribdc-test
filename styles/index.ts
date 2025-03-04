@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
 
 const globalUtilStyles = ScaledSheet.create({
@@ -442,8 +443,11 @@ const globalUtilStyles = ScaledSheet.create({
   rounded0: {
     borderRadius: 0,
   },
-  roundedlg: {
+  roundedmd: {
     borderRadius: "8@s",
+  },
+  roundedlg: {
+    borderRadius: "10@s",
   },
   roundedxl: {
     borderRadius: "12@s",
@@ -504,6 +508,22 @@ const globalUtilStyles = ScaledSheet.create({
   },
   opacityFull: {
     opacity: 1
+  },
+  // box shadow
+  boxShadow:{
+  backgroundColor:"#fff",
+    ...Platform.select({
+      ios:{
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 1.5},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+      },
+      android:{
+        elevation: 2,
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+      }
+    })
   }
 });
 
