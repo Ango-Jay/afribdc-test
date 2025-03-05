@@ -1,21 +1,17 @@
-import type { ReactNode } from "react";
-import { Pressable, type PressableProps } from "react-native";
+import type {ReactNode} from 'react';
+import {Pressable, type PressableProps} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 interface Props extends PressableProps {
   children: ReactNode;
   shouldAnimate?: boolean;
 }
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
- const CustomPressable = ({
-  children,
-  shouldAnimate = true,
-  ...props
-}: Props) => {
+const CustomPressable = ({children, shouldAnimate = true, ...props}: Props) => {
   const scale = useSharedValue(1);
   const opacity = useSharedValue(1);
   const innerContainerAnimatedStyle = useAnimatedStyle(() => {
@@ -31,9 +27,9 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
   return (
     <AnimatedPressable
       hitSlop={
-        typeof props.hitSlop !== "undefined"
+        typeof props.hitSlop !== 'undefined'
           ? props.hitSlop
-          : { top: 16, bottom: 16, left: 16, right: 16 }
+          : {top: 16, bottom: 16, left: 16, right: 16}
       }
       style={[innerContainerAnimatedStyle, props.style]}
       onPressIn={() => {
@@ -48,11 +44,10 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
           opacity.value = 1;
         }
       }}
-      onPress={(e) => {
+      onPress={e => {
         props.onPress?.(e);
       }}
-      {...props}
-    >
+      {...props}>
       {children}
     </AnimatedPressable>
   );

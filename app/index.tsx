@@ -1,13 +1,11 @@
-import { LayoutWithoutScroll } from "@/components/shared/Layout/LayoutWithoutScroll";
-import globalUtilStyles from "@/styles";
-import { View } from "react-native";
+import {LayoutWithoutScroll} from '@/components/shared/Layout/LayoutWithoutScroll';
+import globalUtilStyles from '@/styles';
+import {View} from 'react-native';
 
-export default function InitialScreen (){
-return(
+export default function InitialScreen() {
+  return (
     <LayoutWithoutScroll>
-        <View style={[globalUtilStyles.py10]}>
-
-        </View>
+      <View style={[globalUtilStyles.py10]}></View>
     </LayoutWithoutScroll>
-)
+  );
 }

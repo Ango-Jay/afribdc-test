@@ -1,5 +1,5 @@
 import {StyleSheet, TextInput, type TextInputProps} from 'react-native';
-import { textColorStyle} from '@/styles/color';
+import {textColorStyle} from '@/styles/color';
 import {useEffect, useState} from 'react';
 import globalUtilStyles from '@/styles';
 import {moderateScale} from 'react-native-size-matters';

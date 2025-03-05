@@ -6,8 +6,7 @@ import globalUtilStyles from '@/styles';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 import CustomPressable from '../Button/Pressable';
 import CustomText from '../Text';
-import { MulishFontStyle } from '@/styles/fonts';
-
+import {MulishFontStyle} from '@/styles/fonts';
 
 interface PinKeyPadProps {
   pin: string[];
@@ -146,12 +145,11 @@ export const PinKeypad = ({pin, setPin, maxLength}: PinKeyPadProps) => {
               onPress={onPress}>
               {isNum && (
                 <CustomText
-                size={18}
-                style={[
-                textColorStyle['keypad-gray'],
-                MulishFontStyle.MulishExtraBold
-                ]}
-                  >
+                  size={18}
+                  style={[
+                    textColorStyle['keypad-gray'],
+                    MulishFontStyle.MulishExtraBold,
+                  ]}>
                   {val}
                 </CustomText>
               )}
@@ -165,47 +163,44 @@ export const PinKeypad = ({pin, setPin, maxLength}: PinKeyPadProps) => {
 };
 
 interface PinFieldGroupProps {
-    pin: string[];
-    maxLength: number
+  pin: string[];
+  maxLength: number;
 }
-export const PinFieldGroup = (
-    {
-pin,
-maxLength
-    }:PinFieldGroupProps
-)=>{
-    const fields = Array.from({length: maxLength}, (_, index)=> index);
-    return(
+export const PinFieldGroup = ({pin, maxLength}: PinFieldGroupProps) => {
+  const fields = Array.from({length: maxLength}, (_, index) => index);
+  return (
+    <View
+      style={[
+        globalUtilStyles.wfull,
+        globalUtilStyles.flexRow,
+        globalUtilStyles.justifyCenter,
+        globalUtilStyles.gap3,
+      ]}>
+      {fields.map(field => (
         <View
-        style={[
-            globalUtilStyles.wfull,
-            globalUtilStyles.flexRow,
-            globalUtilStyles.justifyCenter,
-            globalUtilStyles.gap3
-        ]}
-        >
-        {fields.map(field => (
-          <View
-            key={field}
-            style={[
-              styles.pinContainer,
-              globalUtilStyles.p3,
-              globalUtilStyles.roundedfull,
-              globalUtilStyles.border1,
-              borderColorStyle.gray,
-            ]}>
-{
-    pin[field] && (
-        <View 
-        style={[globalUtilStyles.wfull, globalUtilStyles.hfull, globalUtilStyles.roundedfull, bgColorStyle.primary]}
-        />
-    )
-}
-            </View>
-        ))}
-      </View>
-    )
-}
+          key={field}
+          style={[
+            styles.pinContainer,
+            globalUtilStyles.p3,
+            globalUtilStyles.roundedfull,
+            globalUtilStyles.border1,
+            borderColorStyle.gray,
+          ]}>
+          {pin[field] && (
+            <View
+              style={[
+                globalUtilStyles.wfull,
+                globalUtilStyles.hfull,
+                globalUtilStyles.roundedfull,
+                bgColorStyle.primary,
+              ]}
+            />
+          )}
+        </View>
+      ))}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   pinContainer: {
     width: scale(46),
