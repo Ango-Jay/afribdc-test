@@ -5,4 +5,5 @@ export const appColors = {
   gray: '#6B777F',
   error: 'rgba(240, 68, 56, 1)',
   'key-pad-gray': '#505050',
+  "light-gray": "#7A7A7A"
 };

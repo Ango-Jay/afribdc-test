@@ -23,6 +23,9 @@ export const textColorStyle = StyleSheet.create({
   'keypad-gray': {
     color: appColors['key-pad-gray'],
   },
+  "light-gray": {
+    color: appColors['light-gray']
+  },
   error: {
     color: appColors.error,
   },

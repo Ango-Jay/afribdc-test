@@ -14,18 +14,20 @@ import Animated, {
 } from 'react-native-reanimated';
 import {MotiView} from 'moti';
 import {appColors} from '@/constants/Colors';
-
+import EnvelopeIcon from "@/assets/icons/envelope.svg"
 interface Props extends TextInputProps {
   labelTitle?: string;
   isTouched?: boolean;
   isDisabled?: boolean;
   errorMessage?: string;
+  isEmail?: boolean
 }
 const CustomTextInput = ({
   labelTitle,
   isTouched,
   isDisabled,
   errorMessage,
+  isEmail,
   ...props
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -96,6 +98,7 @@ const CustomTextInput = ({
         }}
         style={[
           globalUtilStyles.flexRow,
+          globalUtilStyles.gap3,
           globalUtilStyles.itemsCenter,
           globalUtilStyles.roundedlg,
           globalUtilStyles.px3,
@@ -104,6 +107,7 @@ const CustomTextInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
+          <EnvelopeIcon />
         <TextInput
           {...props}
           onBlur={e => {
@@ -132,7 +136,7 @@ const CustomTextInput = ({
   );
 };
 
-const inputStyle = StyleSheet.create({
+export const inputStyle = StyleSheet.create({
   inputContainerHeight: {
     height: moderateScale(49, 0.1),
   },
