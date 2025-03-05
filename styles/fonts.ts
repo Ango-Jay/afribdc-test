@@ -18,3 +18,10 @@ export const  JostFontStyle =   StyleSheet.create({
         fontWeight: "500",
       },
 })
+
+export const MulishFontStyle = StyleSheet.create({
+  MulishExtraBold: {
+    fontFamily: "MulishExtraBold",
+    fontWeight: 800
+  }
+})

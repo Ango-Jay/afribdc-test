@@ -9,11 +9,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontLoaded] = useFonts({
-    // SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     JostRegular: require('../assets/fonts/Jost-Regular.ttf'),
     JostMedium: require('../assets/fonts/Jost-Medium.ttf'),
     JostSemiBold: require('../assets/fonts/Jost-SemiBold.ttf'),
     JostBold: require('../assets/fonts/Jost-Bold.ttf'),
+    MulishExtraBold: require('../assets/fonts/Mulish-ExtraBold.ttf'),
   });
 
   useEffect(() => {

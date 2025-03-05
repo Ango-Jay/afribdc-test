@@ -11,6 +11,7 @@ import type { ReactNode } from "react";
 import CustomPressable from "./Pressable";
 import CustomText from "../Text";
 import { scale } from "react-native-size-matters";
+import { bgColorStyle, textColorStyle } from "@/styles/color";
 
 interface Props extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -47,12 +48,16 @@ interface Props extends TouchableOpacityProps {
           globalUtilStyles.itemsCenter,
           globalUtilStyles.justifyCenter,
           styles.btnBorderRadius,
+          bgColorStyle.primary,
           props.style,
         ]}
       >
         {Boolean(text) ? (
           <CustomText
-            style={textStyle?.style}
+            style={[
+              textColorStyle.white,
+              textStyle?.style
+            ]}
             weight={textStyle?.weight}
             size={textStyle?.size}
           >

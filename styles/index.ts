@@ -56,6 +56,9 @@ const globalUtilStyles = ScaledSheet.create({
   justifyBetween: {
     justifyContent: "space-between",
   },
+  flexWrap: {
+flexWrap:"wrap"
+  },
   grow: {
     flexGrow: 1,
   },
