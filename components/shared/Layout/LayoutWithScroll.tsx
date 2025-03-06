@@ -20,7 +20,7 @@ interface Props {
 }
 export const LayoutWithScroll = forwardRef<ScrollView, Props>(
   (
-    {children, backgroundColor = "white", onScroll, refreshControl}: Props,
+    {children, backgroundColor = 'white', onScroll, refreshControl}: Props,
     ref,
   ) => {
     const {top: safeAreaTop} = useSafeAreaInsets();

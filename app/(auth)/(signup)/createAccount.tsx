@@ -1,5 +1,3 @@
-export default function CreateAccount () {
-    return(
-        <></>
-    )
+export default function CreateAccount() {
+  return <></>;
 }

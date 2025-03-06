@@ -1,5 +1,3 @@
-export default function ForgotPasswordEmail (){
-    return(
-        <></>
-    )
+export default function ForgotPasswordEmail() {
+  return <></>;
 }

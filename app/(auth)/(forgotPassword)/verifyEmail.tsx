@@ -1,5 +1,3 @@
-export default function VerifyEmailForgotPassword (){
-    return(
-        <></>
-    )
+export default function VerifyEmailForgotPassword() {
+  return <></>;
 }

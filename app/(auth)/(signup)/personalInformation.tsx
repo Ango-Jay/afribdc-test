@@ -1,5 +1,3 @@
-export default function PersonalInformation (){
-    return(
-        <></>
-    )
+export default function PersonalInformation() {
+  return <></>;
 }

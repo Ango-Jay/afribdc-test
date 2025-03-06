@@ -1,5 +1,3 @@
-export default function VerifyEmailSignUp (){
-    return(
-        <></>
-    )
+export default function VerifyEmailSignUp() {
+  return <></>;
 }

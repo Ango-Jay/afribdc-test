@@ -1,5 +1,3 @@
-export default function PreviewRates (){
-    return(
-        <></>
-    )
+export default function PreviewRates() {
+  return <></>;
 }

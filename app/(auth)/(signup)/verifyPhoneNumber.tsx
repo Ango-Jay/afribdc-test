@@ -1,5 +1,3 @@
-export default function VerifyPhoneNumber (){
-    return(
-        <></>
-    )
+export default function VerifyPhoneNumber() {
+  return <></>;
 }

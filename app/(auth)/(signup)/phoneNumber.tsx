@@ -1,5 +1,3 @@
-export default function PhoneNumber (){
-    return(
-        <></>
-    )
+export default function PhoneNumber() {
+  return <></>;
 }

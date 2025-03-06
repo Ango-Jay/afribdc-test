@@ -1,5 +1,3 @@
-export default function SetupPin (){
-    return(
-        <></>
-    )
+export default function SetupPin() {
+  return <></>;
 }
