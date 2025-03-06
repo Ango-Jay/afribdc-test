@@ -1,11 +1,5 @@
-import {LayoutWithoutScroll} from '@/components/shared/Layout/LayoutWithoutScroll';
-import globalUtilStyles from '@/styles';
-import {View} from 'react-native';
+import {Redirect} from 'expo-router';
 
 export default function InitialScreen() {
-  return (
-    <LayoutWithoutScroll>
-      <View style={[globalUtilStyles.py10, globalUtilStyles.gap6]}></View>
-    </LayoutWithoutScroll>
-  );
+  return <Redirect href={'/introduction'} />;
 }
