@@ -1,4 +1,4 @@
-import {TextInput, View, type TextInputProps} from 'react-native';
+import {TextInput,  type TextInputProps} from 'react-native';
 import {textColorStyle} from '@/styles/color';
 import {useEffect, useState} from 'react';
 import globalUtilStyles from '@/styles';
