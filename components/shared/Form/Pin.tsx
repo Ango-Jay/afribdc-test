@@ -9,27 +9,29 @@ import CustomText from '../Text';
 import {MulishFontStyle} from '@/styles/fonts';
 import * as Clipboard from 'expo-clipboard';
 
-
 interface PinKeyPadProps {
   pin: string[];
   setPin: Dispatch<SetStateAction<string[]>>;
   maxLength: number;
-  allowPaste?:boolean
+  allowPaste?: boolean;
 }
-export const PinKeypad = ({pin, setPin, maxLength, allowPaste}: PinKeyPadProps) => {
-  useEffect(
-    ()=>{
-      const pasteCopiedPin = async () => {
-        const text = await Clipboard.getStringAsync();
-         if( text.length === maxLength && /^\d+$/.test(`${text}`)){
-          setPin([...text])
-         }
-      };
-if(allowPaste){
-pasteCopiedPin()
-}
-    }, []
-  )
+export const PinKeypad = ({
+  pin,
+  setPin,
+  maxLength,
+  allowPaste,
+}: PinKeyPadProps) => {
+  useEffect(() => {
+    const pasteCopiedPin = async () => {
+      const text = await Clipboard.getStringAsync();
+      if (text.length === maxLength && /^\d+$/.test(`${text}`)) {
+        setPin([...text]);
+      }
+    };
+    if (allowPaste) {
+      pasteCopiedPin();
+    }
+  }, []);
   const vals = [
     {
       val: '1',
@@ -181,10 +183,10 @@ pasteCopiedPin()
 interface PinFieldGroupProps {
   pin: string[];
   maxLength: number;
-  type : "pin" | "otp"
+  type: 'pin' | 'otp';
 }
-export const PinFieldGroup = ({pin, maxLength ,type}: PinFieldGroupProps) => {
-  const isPin = type === "pin";
+export const PinFieldGroup = ({pin, maxLength, type}: PinFieldGroupProps) => {
+  const isPin = type === 'pin';
   const fields = Array.from({length: maxLength}, (_, index) => index);
   return (
     <View
@@ -198,34 +200,32 @@ export const PinFieldGroup = ({pin, maxLength ,type}: PinFieldGroupProps) => {
         <View
           key={field}
           style={[
-           isPin ? styles.pinContainer : styles.otpContainer,
+            isPin ? styles.pinContainer : styles.otpContainer,
             globalUtilStyles.p3,
-          isPin ?  globalUtilStyles.roundedfull : globalUtilStyles.roundedmd,
+            isPin ? globalUtilStyles.roundedfull : globalUtilStyles.roundedmd,
             globalUtilStyles.justifyCenter,
             globalUtilStyles.itemsCenter,
             globalUtilStyles.border1,
             borderColorStyle.gray,
           ]}>
-          {pin[field] && (
-          isPin ? (
-            <View
-            style={[
-              globalUtilStyles.wfull,
-              globalUtilStyles.hfull,
-              globalUtilStyles.roundedfull,
-              bgColorStyle.primary,
-            ]}
-          />
-          ) : (
-            <CustomText
-            size={20}
-            weight={500}
-            style={[textColorStyle.secondary]}
-            >
-              {pin[field]}
-            </CustomText>
-          )
-          )}
+          {pin[field] &&
+            (isPin ? (
+              <View
+                style={[
+                  globalUtilStyles.wfull,
+                  globalUtilStyles.hfull,
+                  globalUtilStyles.roundedfull,
+                  bgColorStyle.primary,
+                ]}
+              />
+            ) : (
+              <CustomText
+                size={20}
+                weight={500}
+                style={[textColorStyle.secondary]}>
+                {pin[field]}
+              </CustomText>
+            ))}
         </View>
       ))}
     </View>
@@ -238,6 +238,6 @@ const styles = StyleSheet.create({
   },
   otpContainer: {
     width: scale(45),
-    height: verticalScale(60)
-  }
+    height: verticalScale(60),
+  },
 });

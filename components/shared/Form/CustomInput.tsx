@@ -1,4 +1,4 @@
-import {StyleSheet, TextInput, type TextInputProps} from 'react-native';
+import {StyleSheet, TextInput, type ViewStyle, type TextInputProps} from 'react-native';
 import {textColorStyle} from '@/styles/color';
 import {useEffect, useState} from 'react';
 import globalUtilStyles from '@/styles';
@@ -20,7 +20,8 @@ interface Props extends TextInputProps {
   isTouched?: boolean;
   isDisabled?: boolean;
   errorMessage?: string;
-  isEmail?: boolean
+  isEmail?: boolean;
+  containerStyle?: ViewStyle
 }
 const CustomTextInput = ({
   labelTitle,
@@ -28,6 +29,7 @@ const CustomTextInput = ({
   isDisabled,
   errorMessage,
   isEmail,
+  containerStyle,
   ...props
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -80,7 +82,7 @@ const CustomTextInput = ({
   });
 
   return (
-    <Animated.View style={[animatedContainerStyle]}>
+    <Animated.View style={[animatedContainerStyle, containerStyle]}>
       {labelTitle && (
         <CustomText
           size={14}
@@ -107,7 +109,9 @@ const CustomTextInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
-          <EnvelopeIcon />
+         {
+          isEmail && ( <EnvelopeIcon />)
+         }
         <TextInput
           {...props}
           onBlur={e => {

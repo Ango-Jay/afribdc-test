@@ -59,6 +59,9 @@ export const borderColorStyle = StyleSheet.create({
   gray: {
     borderColor: appColors.gray,
   },
+  "light-gray": {
+    borderColor: appColors['background-light-gray']
+  },
   error: {
     borderColor: appColors.error,
   },
