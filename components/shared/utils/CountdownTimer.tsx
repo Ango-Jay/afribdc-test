@@ -1,13 +1,13 @@
-import Countdown, { zeroPad } from 'react-countdown';
-import { useRef } from 'react';
+import Countdown, {zeroPad} from 'react-countdown';
+import {useRef} from 'react';
 import CustomText from '../Text';
-import { textColorStyle } from '@/styles/color';
+import {textColorStyle} from '@/styles/color';
 
 interface Props {
   countdownTime: number;
 }
 
-const CountdownTimer = ({ countdownTime}: Props)=>{
+const CountdownTimer = ({countdownTime}: Props) => {
   const today = useRef(Date.now()).current;
   const renderer = ({
     seconds,
@@ -20,12 +20,7 @@ const CountdownTimer = ({ countdownTime}: Props)=>{
     if (!completed) {
       // Render a countdown
       return (
-        <CustomText 
-        weight={500}
-        style={[
-          textColorStyle.highlight
-        ]}
-        >
+        <CustomText weight={500} style={[textColorStyle.highlight]}>
           ({zeroPad(seconds)}s)
         </CustomText>
       );
@@ -33,9 +28,5 @@ const CountdownTimer = ({ countdownTime}: Props)=>{
   };
 
   return <Countdown date={today + countdownTime} renderer={renderer} />;
-}
+};
 export default CountdownTimer;
-
-
-
-

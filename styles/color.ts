@@ -23,8 +23,8 @@ export const textColorStyle = StyleSheet.create({
   'keypad-gray': {
     color: appColors['key-pad-gray'],
   },
-  "light-gray": {
-    color: appColors['light-gray']
+  'light-gray': {
+    color: appColors['light-gray'],
   },
   error: {
     color: appColors.error,
@@ -59,8 +59,8 @@ export const borderColorStyle = StyleSheet.create({
   gray: {
     borderColor: appColors.gray,
   },
-  "light-gray": {
-    borderColor: appColors['background-light-gray']
+  'light-gray': {
+    borderColor: appColors['background-light-gray'],
   },
   error: {
     borderColor: appColors.error,

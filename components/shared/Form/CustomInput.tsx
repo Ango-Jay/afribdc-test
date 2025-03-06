@@ -1,4 +1,9 @@
-import {StyleSheet, TextInput, type ViewStyle, type TextInputProps} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  type ViewStyle,
+  type TextInputProps,
+} from 'react-native';
 import {textColorStyle} from '@/styles/color';
 import {useEffect, useState} from 'react';
 import globalUtilStyles from '@/styles';
@@ -14,14 +19,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import {MotiView} from 'moti';
 import {appColors} from '@/constants/Colors';
-import EnvelopeIcon from "@/assets/icons/envelope.svg"
+import EnvelopeIcon from '@/assets/icons/envelope.svg';
 interface Props extends TextInputProps {
   labelTitle?: string;
   isTouched?: boolean;
   isDisabled?: boolean;
   errorMessage?: string;
   isEmail?: boolean;
-  containerStyle?: ViewStyle
+  containerStyle?: ViewStyle;
 }
 const CustomTextInput = ({
   labelTitle,
@@ -109,9 +114,7 @@ const CustomTextInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
-         {
-          isEmail && ( <EnvelopeIcon />)
-         }
+        {isEmail && <EnvelopeIcon />}
         <TextInput
           {...props}
           onBlur={e => {

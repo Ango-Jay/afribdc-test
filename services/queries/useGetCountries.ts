@@ -2,9 +2,7 @@ import {useEffect, useState} from 'react';
 import {getAllCountries, FlagType} from 'react-native-country-picker-modal';
 
 export const useGetCountries = () => {
-  const [countries, setCountries] = useState<
-    Array<Country>
-  >([]);
+  const [countries, setCountries] = useState<Array<Country>>([]);
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -31,4 +29,4 @@ export type Country = {
   name: string;
   callingCode: string;
   icon: string;
-}
+};

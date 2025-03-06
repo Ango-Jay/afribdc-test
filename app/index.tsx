@@ -5,9 +5,7 @@ import {View} from 'react-native';
 export default function InitialScreen() {
   return (
     <LayoutWithoutScroll>
-      <View style={[globalUtilStyles.py10, globalUtilStyles.gap6]}>
-
-      </View>
+      <View style={[globalUtilStyles.py10, globalUtilStyles.gap6]}></View>
     </LayoutWithoutScroll>
   );
 }

@@ -1,5 +1,5 @@
 import {Skeleton} from 'moti/skeleton';
-import { useState } from 'react';
+import {useState} from 'react';
 import FastImage, {FastImageProps} from 'react-native-fast-image';
 import {View, type ViewStyle} from 'react-native';
 import CustomText from '../Text';
@@ -10,11 +10,7 @@ interface Props extends FastImageProps {
   label?: string;
 }
 
-const CustomImage = ({
-  isVisible,
-  label,
-  ...props
-}:Props) => {
+const CustomImage = ({isVisible, label, ...props}: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   return (
     <View
@@ -44,7 +40,7 @@ const CustomImage = ({
               {...props}
             />
           ) : (
-            <CustomText >{label}</CustomText>
+            <CustomText>{label}</CustomText>
           )}
         </View>
 

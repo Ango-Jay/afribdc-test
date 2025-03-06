@@ -9,10 +9,7 @@ import {
   type TextInputProps,
   ViewStyle,
 } from 'react-native';
-import Animated, {
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import CustomTextInput, {inputStyle} from './CustomInput';
 import CustomPressable from '../Button/Pressable';
 import ChevronIcon from '@/assets/icons/chevron.svg';
@@ -23,87 +20,81 @@ import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 import CustomText from '../Text';
 import CustomImage from '../Image';
 import {scale} from 'react-native-size-matters';
-import {type Country, useGetCountries} from '@/services/queries/useGetCountries';
+import {
+  type Country,
+  useGetCountries,
+} from '@/services/queries/useGetCountries';
 import BackButton from '../Button/BackButton';
-
 
 type PhoneNumber = {
   countryCode: string;
-  callingCode:string
+  callingCode: string;
   number: string;
 };
 interface Props extends TextInputProps {
   phoneNumber: PhoneNumber;
-  setPhoneNumber: Dispatch<SetStateAction<PhoneNumber>>
+  setPhoneNumber: Dispatch<SetStateAction<PhoneNumber>>;
   isTouched?: boolean;
   isDisabled?: boolean;
   errorMessage?: string;
 }
-const PhoneNumberInput = (
-  {
-phoneNumber,
-setPhoneNumber,
-errorMessage,
-...props
-  }:Props
-) => {
-  const setCallingAndCountryCode = (callingCode: string, countryCode: string)=>{
+const PhoneNumberInput = ({
+  phoneNumber,
+  setPhoneNumber,
+  errorMessage,
+  ...props
+}: Props) => {
+  const setCallingAndCountryCode = (
+    callingCode: string,
+    countryCode: string,
+  ) => {
     setPhoneNumber(prev => ({
       ...prev,
       callingCode: callingCode,
-      countryCode: countryCode
-    }))
+      countryCode: countryCode,
+    }));
   };
- const setPhoneNumberInput = (val:string)=>{
+  const setPhoneNumberInput = (val: string) => {
     setPhoneNumber(prev => ({
       ...prev,
-      number: val
-    }))
-  }
+      number: val,
+    }));
+  };
   return (
-    <View
-    style={[globalUtilStyles.flexRow,
-      globalUtilStyles.gap2
-    ]}
-    >
-    <CountrySelect 
-    country={{
-      callingCode: phoneNumber.callingCode,
-      countryCode: phoneNumber.countryCode
-    }}
-    setCountry={setCallingAndCountryCode}
-    />
-    <CustomTextInput 
-       {...props}
-    value={phoneNumber.number}
-    onChangeText={setPhoneNumberInput}
-    containerStyle={[globalUtilStyles.flex1] as unknown as ViewStyle}
-    errorMessage={errorMessage}
-    />
+    <View style={[globalUtilStyles.flexRow, globalUtilStyles.gap2]}>
+      <CountrySelect
+        country={{
+          callingCode: phoneNumber.callingCode,
+          countryCode: phoneNumber.countryCode,
+        }}
+        setCountry={setCallingAndCountryCode}
+      />
+      <CustomTextInput
+        {...props}
+        value={phoneNumber.number}
+        onChangeText={setPhoneNumberInput}
+        containerStyle={[globalUtilStyles.flex1] as unknown as ViewStyle}
+        errorMessage={errorMessage}
+      />
     </View>
   );
 };
 
 interface CountrySelectProps {
- country: {
-  callingCode: string;
-  countryCode: string;
-};
-  setCountry:(callingCode: string, countryCode: string) => void
+  country: {
+    callingCode: string;
+    countryCode: string;
+  };
+  setCountry: (callingCode: string, countryCode: string) => void;
 }
-const CountrySelect = ({
-  country,
-  setCountry,
-}: CountrySelectProps) => {
+const CountrySelect = ({country, setCountry}: CountrySelectProps) => {
   const [showModal, setShowModal] = useState(false);
   const countries = useGetCountries();
-  const activeCountry = countries.find(item => item.id === country.countryCode)
+  const activeCountry = countries.find(item => item.id === country.countryCode);
   return (
     <>
-      <View style={[{width: "30%", minWidth: scale(100)}]}>
-        <CustomPressable
-        onPress={()=>setShowModal(true)}
-        >
+      <View style={[{width: '30%', minWidth: scale(100)}]}>
+        <CustomPressable onPress={() => setShowModal(true)}>
           <View
             style={[
               globalUtilStyles.flexRow,
@@ -115,21 +106,21 @@ const CountrySelect = ({
               inputStyle.inputContainerHeight,
               globalUtilStyles.boxShadow,
             ]}>
-            {
-              !!activeCountry?.icon && (
-                <>
-                     <CustomImage
-                    source={{uri: activeCountry.icon}}
-                    style={[styles.countryFlagImage, globalUtilStyles.borderhalf, borderColorStyle['light-gray']]}
-                  />
-            <CustomText
-            style={[textColorStyle.gray]}
-            >
-            +{country.callingCode}
-            </CustomText>
-                </>
-              )
-            }
+            {!!activeCountry?.icon && (
+              <>
+                <CustomImage
+                  source={{uri: activeCountry.icon}}
+                  style={[
+                    styles.countryFlagImage,
+                    globalUtilStyles.borderhalf,
+                    borderColorStyle['light-gray'],
+                  ]}
+                />
+                <CustomText style={[textColorStyle.gray]}>
+                  +{country.callingCode}
+                </CustomText>
+              </>
+            )}
             <ChevronIcon />
           </View>
         </CustomPressable>
@@ -207,19 +198,20 @@ export const CountryListModal = ({
           {maxHeight: ViewHeight},
         ]}>
         <View style={[globalUtilStyles.wfull]}>
- <View
- style={[
-  globalUtilStyles.flexRow, 
-  globalUtilStyles.itemsCenter,
-  globalUtilStyles.wfull
- ]}
- >
- <BackButton
-      onPress={closeModal}
-      style={globalUtilStyles.absolute}
-      />
-          <CustomText weight={500} style={[globalUtilStyles.mxauto]} >Select a Country</CustomText>
- </View>
+          <View
+            style={[
+              globalUtilStyles.flexRow,
+              globalUtilStyles.itemsCenter,
+              globalUtilStyles.wfull,
+            ]}>
+            <BackButton
+              onPress={closeModal}
+              style={globalUtilStyles.absolute}
+            />
+            <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
+              Select a Country
+            </CustomText>
+          </View>
           <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
             <CustomTextInput
               value={searchText}
@@ -267,7 +259,11 @@ export const CountryListModal = ({
                 {item.icon && (
                   <CustomImage
                     source={{uri: item.icon}}
-                    style={[styles.countryFlagImage, globalUtilStyles.borderhalf, borderColorStyle['light-gray']]}
+                    style={[
+                      styles.countryFlagImage,
+                      globalUtilStyles.borderhalf,
+                      borderColorStyle['light-gray'],
+                    ]}
                   />
                 )}
                 <CustomText>{item.name}</CustomText>
