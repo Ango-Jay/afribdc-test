@@ -310,7 +310,7 @@ const globalUtilStyles = ScaledSheet.create({
   },
   my4: {
     marginTop: '16@s',
-    marginBottomt: '16@s',
+    marginBottom: '16@s',
   },
   my5: {
     marginTop: '20@s',

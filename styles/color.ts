@@ -35,6 +35,9 @@ export const bgColorStyle = StyleSheet.create({
   primary: {
     backgroundColor: appColors.primary,
   },
+  'primary-highlight': {
+    backgroundColor: appColors['primary-highlight'],
+  },
   secondary: {
     backgroundColor: appColors.secondary,
   },
