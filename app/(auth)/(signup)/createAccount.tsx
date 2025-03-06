@@ -3,16 +3,19 @@ import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
 import {View} from 'react-native';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import CustomTextInput from '@/components/shared/Form/CustomInput';
 import PasswordInput from '@/components/shared/Form/PasswordInput';
 import CustomButton from '@/components/shared/Button';
 import {textColorStyle} from '@/styles/color';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 export default function CreateAccount() {
   const {
     control,
     formState: {errors},
+    handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
       email: '',
@@ -20,7 +23,11 @@ export default function CreateAccount() {
       password: '',
       confirmPassword: '',
     },
+    resolver: yupResolver(validationSchema),
   });
+  const onSubmit: SubmitHandler<FormValues> = () => {
+    // do something
+  };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -100,7 +107,7 @@ export default function CreateAccount() {
               globalUtilStyles.gap4,
               globalUtilStyles.mt8,
             ]}>
-            <CustomButton text="Sign up" />
+            <CustomButton onPress={handleSubmit(onSubmit)} text="Sign up" />
             <View style={[globalUtilStyles.itemsCenter]}>
               <CustomText weight={500}>
                 Already have an account?{' '}
@@ -115,6 +122,26 @@ export default function CreateAccount() {
     </LayoutWithScroll>
   );
 }
+
+const validationSchema = yup.object({
+  email: yup.string().required('Required'),
+  userName: yup.string().required('Required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be atleast 8 characters')
+    .required('Required'),
+  confirmPassword: yup
+    .string()
+    .min(8, 'Password must be atleast 8 characters')
+    .test(
+      'passwords match',
+      'Passwords do not match. Try again.',
+      function (value) {
+        return this.parent.password === value;
+      },
+    )
+    .required('Required'),
+});
 type FormValues = {
   email: string;
   userName: string;
