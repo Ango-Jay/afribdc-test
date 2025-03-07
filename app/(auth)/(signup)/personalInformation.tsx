@@ -9,6 +9,10 @@ import {Controller, type SubmitHandler, useForm} from 'react-hook-form';
 import CustomTextInput from '@/components/shared/Form/CustomInput';
 import CustomButton from '@/components/shared/Button';
 import DateField from '@/components/shared/Form/DateField';
+import SelectField, {type Option} from '@/components/shared/Form/SelectField';
+import {useGetCountries} from '@/services/queries/useGetCountries';
+import {useState} from 'react';
+import {getStates} from 'country-state-picker';
 
 export default function PersonalInformation() {
   const {
@@ -31,9 +35,40 @@ export default function PersonalInformation() {
     },
     resolver: yupResolver(validationSchema),
   });
-  const dateOfBirthValue = watch().dateOfBirth;
+  const [stateOptions, setStateOptions] = useState<Option[]>([]);
+  const values = watch();
+  const dateOfBirthValue = values.dateOfBirth;
   const setDateOfBirth = (value: string) => {
     setValue('dateOfBirth', value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+  const countriesOptions = useGetCountries().map(country => ({
+    id: country.id,
+    name: country.name,
+    value: country.name,
+    icon: country.icon,
+  }));
+  const countryOfResidenceValue = values.countryOfResidence;
+  const setCountryOfResidence = (value: string, option?: Option) => {
+    setValue('countryOfResidence', value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+    setStateOptions(
+      (getStates(option?.id.toLowerCase()!) as string[]).map(state => ({
+        id: state,
+        name: state,
+        value: state,
+      })),
+    );
+  };
+  const stateValue = values.state;
+  const setState = (value: string) => {
+    setValue('state', value, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
@@ -98,7 +133,26 @@ export default function PersonalInformation() {
               errorMessage={errors.dateOfBirth?.message}
             />
           </View>
-          {/*date inputs and dropdown inputs */}
+          <View style={[globalUtilStyles.wfull]}>
+            <SelectField
+              labelTitle="Country of residence"
+              placeholder="Select Country"
+              value={countryOfResidenceValue}
+              selectOption={setCountryOfResidence}
+              options={countriesOptions}
+              errorMessage={errors.countryOfResidence?.message}
+            />
+          </View>
+          <View style={[globalUtilStyles.wfull]}>
+            <SelectField
+              labelTitle="State/Territory"
+              placeholder="Select State"
+              value={stateValue}
+              selectOption={setState}
+              options={stateOptions}
+              errorMessage={errors.state?.message}
+            />
+          </View>
           <View style={[globalUtilStyles.wfull]}>
             <Controller
               control={control}
@@ -156,13 +210,14 @@ export default function PersonalInformation() {
             />
           </View>
           <View style={[globalUtilStyles.mt10, globalUtilStyles.wfull]}>
-            <CustomButton text="Continue" />
+            <CustomButton onPress={handleSubmit(onSubmit)} text="Continue" />
           </View>
         </View>
       </View>
     </LayoutWithScroll>
   );
 }
+
 const validationSchema = yup.object({
   firstName: yup.string().required('Required'),
   lastName: yup.string().required('Required'),
