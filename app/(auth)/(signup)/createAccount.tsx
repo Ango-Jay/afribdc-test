@@ -50,7 +50,9 @@ export default function CreateAccount() {
               name="email"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
                   errorMessage={errors.email?.message}
@@ -65,7 +67,9 @@ export default function CreateAccount() {
               name="userName"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Username"
                   placeholder="Enter unique username"
                   errorMessage={errors.userName?.message}
@@ -79,7 +83,9 @@ export default function CreateAccount() {
               name="password"
               render={({field}) => (
                 <PasswordInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Create password"
                   placeholder="Password"
                   errorMessage={errors.password?.message}
@@ -93,7 +99,9 @@ export default function CreateAccount() {
               name="confirmPassword"
               render={({field}) => (
                 <PasswordInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Confirm password"
                   placeholder="Confirm password"
                   errorMessage={errors.confirmPassword?.message}

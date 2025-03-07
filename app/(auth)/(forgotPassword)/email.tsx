@@ -61,7 +61,9 @@ export default function ForgotPasswordEmail() {
               name="email"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
                   errorMessage={errors.email?.message}

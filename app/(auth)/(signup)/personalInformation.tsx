@@ -103,7 +103,9 @@ export default function PersonalInformation() {
               name="firstName"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="First name *"
                   placeholder="first name"
                   errorMessage={errors.firstName?.message}
@@ -117,7 +119,9 @@ export default function PersonalInformation() {
               name="lastName"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Last name *"
                   placeholder="last name"
                   errorMessage={errors.lastName?.message}
@@ -159,7 +163,9 @@ export default function PersonalInformation() {
               name="address1"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Address line 1"
                   placeholder="address line 1"
                   errorMessage={errors.address1?.message}
@@ -173,7 +179,9 @@ export default function PersonalInformation() {
               name="address2"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Address line 2 (Optional)"
                   placeholder="Address line 2"
                   errorMessage={errors.address2?.message}
@@ -187,7 +195,9 @@ export default function PersonalInformation() {
               name="city"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="City"
                   placeholder="city"
                   errorMessage={errors.city?.message}
@@ -201,7 +211,9 @@ export default function PersonalInformation() {
               name="zipCode"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Postal/Zip Code"
                   placeholder="Postal"
                   errorMessage={errors.zipCode?.message}

@@ -52,7 +52,9 @@ export default function ResetPassword() {
               name="password"
               render={({field}) => (
                 <PasswordInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Create password"
                   placeholder="Password"
                   errorMessage={errors.password?.message}
@@ -66,7 +68,9 @@ export default function ResetPassword() {
               name="confirmPassword"
               render={({field}) => (
                 <PasswordInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Confirm password"
                   placeholder="Confirm password"
                   errorMessage={errors.confirmPassword?.message}

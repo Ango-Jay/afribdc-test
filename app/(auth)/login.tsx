@@ -45,7 +45,9 @@ export default function Login() {
               name="email"
               render={({field}) => (
                 <CustomTextInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
                   errorMessage={errors.email?.message}
@@ -60,7 +62,9 @@ export default function Login() {
               name="password"
               render={({field}) => (
                 <PasswordInput
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
                   labelTitle="Create password"
                   placeholder="Password"
                   errorMessage={errors.password?.message}
