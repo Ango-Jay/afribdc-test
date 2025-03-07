@@ -8,11 +8,14 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, type SubmitHandler, useForm} from 'react-hook-form';
 import CustomTextInput from '@/components/shared/Form/CustomInput';
 import CustomButton from '@/components/shared/Button';
+import DateInput from '@/components/shared/Form/DateInput';
 
 export default function PersonalInformation() {
   const {
     control,
     formState: {errors},
+    watch,
+    setValue,
     handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
@@ -28,6 +31,14 @@ export default function PersonalInformation() {
     },
     resolver: yupResolver(validationSchema),
   });
+  const dateOfBirthValue = watch().dateOfBirth;
+  const setDateOfBirth = (value: string) => {
+    setValue('dateOfBirth', value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
   };
@@ -77,6 +88,14 @@ export default function PersonalInformation() {
                   errorMessage={errors.lastName?.message}
                 />
               )}
+            />
+          </View>
+          <View style={[globalUtilStyles.wfull]}>
+            <DateInput
+              labelTitle="Date of Birth"
+              value={dateOfBirthValue}
+              setFieldValue={setDateOfBirth}
+              errorMessage={errors.dateOfBirth?.message}
             />
           </View>
           {/*date inputs and dropdown inputs */}
