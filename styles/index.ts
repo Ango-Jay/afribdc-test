@@ -519,7 +519,7 @@ const globalUtilStyles = ScaledSheet.create({
       ios: {
         shadowColor: '#000',
         shadowOffset: {width: 0, height: 1.5},
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.15,
         shadowRadius: 3,
       },
       android: {

@@ -44,7 +44,6 @@ export default function Introduction() {
             containerStyle={[
               globalUtilStyles.border1,
               borderColorStyle.secondary,
-              // bgColorStyle.white
             ]}
             style={[bgColorStyle.white]}
             textStyle={{
