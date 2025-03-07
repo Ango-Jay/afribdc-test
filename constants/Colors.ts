@@ -8,4 +8,5 @@ export const appColors = {
   'key-pad-gray': '#505050',
   'light-gray': '#7A7A7A',
   'background-light-gray': '#E2E6EA',
+  yellow: '#E99B36',
 };

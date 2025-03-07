@@ -56,6 +56,9 @@ const globalUtilStyles = ScaledSheet.create({
   justifyBetween: {
     justifyContent: 'space-between',
   },
+  justifySpaceAround: {
+    justifyContent: 'space-around',
+  },
   flexWrap: {
     flexWrap: 'wrap',
   },
@@ -168,7 +171,7 @@ const globalUtilStyles = ScaledSheet.create({
   },
   py4: {
     paddingTop: '16@s',
-    paddingBottomt: '16@s',
+    paddingBottom: '16@s',
   },
   py5: {
     paddingTop: '20@s',
