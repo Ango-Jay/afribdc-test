@@ -1,6 +1,5 @@
 import CustomButton from '@/components/shared/Button';
 import CustomPressable from '@/components/shared/Button/Pressable';
-import CustomImage from '@/components/shared/Image';
 import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
 import RateTile from '@/components/shared/utils/RateTile';

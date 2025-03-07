@@ -3,12 +3,20 @@ import CustomPressable from './Pressable';
 import ChevronIcon from '@/assets/icons/chevron.svg';
 import {scale} from 'react-native-size-matters';
 import globalUtilStyles from '@/styles';
+import {router} from 'expo-router';
 
 interface Props extends TouchableOpacityProps {}
 const BackButton = ({...props}: Props) => {
   return (
     <CustomPressable
       {...props}
+      onPress={e => {
+        if (props.onPress) {
+          props.onPress(e);
+        } else {
+          router.back();
+        }
+      }}
       style={[
         styles.dimensions,
         globalUtilStyles.itemsCenter,

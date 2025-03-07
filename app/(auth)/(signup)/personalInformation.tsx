@@ -1,4 +1,3 @@
-import BackButton from '@/components/shared/Button/BackButton';
 import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
@@ -13,6 +12,7 @@ import SelectField, {type Option} from '@/components/shared/Form/SelectField';
 import {useGetCountries} from '@/services/queries/useGetCountries';
 import {useState} from 'react';
 import {getStates} from 'country-state-picker';
+import {router} from 'expo-router';
 
 export default function PersonalInformation() {
   const {
@@ -76,6 +76,7 @@ export default function PersonalInformation() {
   };
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    router.push('/(auth)/(signup)/setupPin');
   };
   return (
     <LayoutWithScroll>
@@ -86,7 +87,6 @@ export default function PersonalInformation() {
             globalUtilStyles.itemsCenter,
             globalUtilStyles.mb10,
           ]}>
-          <BackButton style={[globalUtilStyles.absolute]} />
           <CustomText size={20} style={[globalUtilStyles.mxauto]}>
             Personal information
           </CustomText>

@@ -9,6 +9,7 @@ import CustomText from '@/components/shared/Text';
 import CustomTextInput from '@/components/shared/Form/CustomInput';
 import CustomButton from '@/components/shared/Button';
 import {bgColorStyle, textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 
 export default function ForgotPasswordEmail() {
   const {
@@ -23,6 +24,7 @@ export default function ForgotPasswordEmail() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    router.push('/(auth)/(forgotPassword)/verifyEmail');
   };
   return (
     <LayoutWithoutScroll>
@@ -73,8 +75,9 @@ export default function ForgotPasswordEmail() {
             />
           </View>
           <View style={[globalUtilStyles.wfull, globalUtilStyles.gap6]}>
-            <CustomButton text="Next" />
+            <CustomButton onPress={handleSubmit(onSubmit)} text="Next" />
             <CustomButton
+              onPress={() => router.navigate('/login')}
               style={[bgColorStyle.white]}
               textStyle={{
                 size: 20,

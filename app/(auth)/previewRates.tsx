@@ -7,6 +7,7 @@ import {appColors} from '@/constants/Colors';
 import globalUtilStyles from '@/styles';
 import {bgColorStyle, textColorStyle} from '@/styles/color';
 import {FlashList} from '@shopify/flash-list';
+import {router} from 'expo-router';
 import {View} from 'react-native';
 
 export default function PreviewRates() {
@@ -42,12 +43,18 @@ export default function PreviewRates() {
           />
         </View>
         <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
-          <CustomButton text="Get started" />
+          <CustomButton
+            onPress={() => router.push('/(auth)/(signup)/phoneNumber')}
+            text="Get started"
+          />
         </View>
         <View style={[globalUtilStyles.itemsCenter]}>
           <CustomText weight={500}>
             Already have an account?{' '}
-            <CustomText weight={500} style={[textColorStyle.highlight]}>
+            <CustomText
+              onPress={() => router.push('/login')}
+              weight={500}
+              style={[textColorStyle.highlight]}>
               Login
             </CustomText>
           </CustomText>

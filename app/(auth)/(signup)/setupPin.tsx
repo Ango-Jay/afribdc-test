@@ -4,11 +4,15 @@ import {PinFieldGroup, PinKeypad} from '@/components/shared/Form/Pin';
 import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
+import {router} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
 export default function SetupPin() {
   const [pin, setPin] = useState<string[]>([]);
+  const onSubmit = () => {
+    router.push('/login');
+  };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -43,7 +47,7 @@ export default function SetupPin() {
         <View style={[globalUtilStyles.gap6]}>
           <PinFieldGroup type="pin" pin={pin} maxLength={4} />
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton text="Proceed" />
+            <CustomButton onPress={onSubmit} text="Proceed" />
           </View>
           <PinKeypad pin={pin} setPin={setPin} maxLength={4} />
         </View>

@@ -4,6 +4,7 @@ import {LayoutWithoutScroll} from '@/components/shared/Layout/LayoutWithoutScrol
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 import {View} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
@@ -41,6 +42,7 @@ export default function Introduction() {
             globalUtilStyles.mb4,
           ]}>
           <CustomButton
+            onPress={() => router.push('/previewRates')}
             containerStyle={[
               globalUtilStyles.border1,
               borderColorStyle.secondary,
@@ -53,11 +55,17 @@ export default function Introduction() {
             }}
             text="View Best Rate Now"
           />
-          <CustomButton text="Get started" />
+          <CustomButton
+            onPress={() => router.push('/(auth)/(signup)/phoneNumber')}
+            text="Get started"
+          />
         </View>
         <CustomText weight={500}>
           Already have an account?{' '}
-          <CustomText weight={500} style={[textColorStyle.highlight]}>
+          <CustomText
+            onPress={() => router.push('/login')}
+            weight={500}
+            style={[textColorStyle.highlight]}>
             Login
           </CustomText>
         </CustomText>

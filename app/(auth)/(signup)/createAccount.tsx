@@ -10,6 +10,7 @@ import CustomButton from '@/components/shared/Button';
 import {textColorStyle} from '@/styles/color';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {router} from 'expo-router';
 
 export default function CreateAccount() {
   const {
@@ -27,12 +28,15 @@ export default function CreateAccount() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    router.push('/(auth)/(signup)/verifyEmail');
   };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
         <View style={[globalUtilStyles.mb10]}>
-          <BackButton />
+          <BackButton
+            onPress={() => router.navigate('/(auth)/(signup)/phoneNumber')}
+          />
         </View>
         <View
           style={[
@@ -119,7 +123,10 @@ export default function CreateAccount() {
             <View style={[globalUtilStyles.itemsCenter]}>
               <CustomText weight={500}>
                 Already have an account?{' '}
-                <CustomText weight={500} style={[textColorStyle.highlight]}>
+                <CustomText
+                  onPress={() => router.navigate('/login')}
+                  weight={500}
+                  style={[textColorStyle.highlight]}>
                   Login
                 </CustomText>
               </CustomText>

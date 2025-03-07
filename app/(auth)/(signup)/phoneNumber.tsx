@@ -5,6 +5,8 @@ import {LayoutWithoutScroll} from '@/components/shared/Layout/LayoutWithoutScrol
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
+import validatePhoneNumber from '@/utils/validatePhoneNumber';
+import {router} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
@@ -14,6 +16,17 @@ export default function PhoneNumber() {
     callingCode: '234',
     number: '',
   });
+  const [isValid, setIsValid] = useState<boolean>();
+  const onSubmit = () => {
+    const validPhoneNumber = validatePhoneNumber({
+      phoneNumber: phoneNumber.number,
+      countryCode: phoneNumber.countryCode,
+      onValidate: value => setIsValid(value),
+    });
+    if (validPhoneNumber) {
+      router.push('/(auth)/(signup)/verifyPhoneNumber');
+    }
+  };
   return (
     <LayoutWithoutScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -38,10 +51,15 @@ export default function PhoneNumber() {
             <PhoneNumberInput
               phoneNumber={phoneNumber}
               setPhoneNumber={setPhoneNumber}
+              errorMessage={
+                typeof isValid !== 'undefined' && !isValid
+                  ? 'Invalid Phone number'
+                  : undefined
+              }
             />
           </View>
           <View style={[globalUtilStyles.wfull, globalUtilStyles.mt10]}>
-            <CustomButton text="Continue" />
+            <CustomButton onPress={onSubmit} text="Continue" />
           </View>
         </View>
       </View>

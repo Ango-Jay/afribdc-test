@@ -11,8 +11,10 @@ const validatePhoneNumber = ({phoneNumber, countryCode, onValidate}: args) => {
     const parsedNumber = phoneUtil.parse(phoneNumber, countryCode);
     const valid = phoneUtil.isValidNumber(parsedNumber);
     onValidate(valid);
+    return valid;
   } catch {
     onValidate(false);
+    return false;
   }
 };
 

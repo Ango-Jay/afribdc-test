@@ -9,6 +9,7 @@ import {Controller, type SubmitHandler, useForm} from 'react-hook-form';
 import PasswordInput from '@/components/shared/Form/PasswordInput';
 import CustomButton from '@/components/shared/Button';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 
 export default function ResetPassword() {
   const {
@@ -24,6 +25,7 @@ export default function ResetPassword() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    router.navigate('/login');
   };
   return (
     <LayoutWithScroll>
@@ -79,8 +81,12 @@ export default function ResetPassword() {
             />
           </View>
           <View style={[globalUtilStyles.gap6, globalUtilStyles.mt10]}>
-            <CustomButton text="Reset Password" />
             <CustomButton
+              onPress={handleSubmit(onSubmit)}
+              text="Reset Password"
+            />
+            <CustomButton
+              onPress={() => router.navigate('/(auth)/(forgotPassword)/email')}
               containerStyle={[
                 globalUtilStyles.border1,
                 borderColorStyle.secondary,

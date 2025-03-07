@@ -8,6 +8,7 @@ import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
@@ -72,7 +73,10 @@ export default function VerifyEmailForgotPassword() {
             </CustomPressable>
           </View>
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton text="Submit" />
+            <CustomButton
+              onPress={() => router.push('/resetPassword')}
+              text="Submit"
+            />
           </View>
           <PinKeypad pin={otp} setPin={setOtp} maxLength={6} allowPaste />
         </View>

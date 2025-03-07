@@ -8,11 +8,15 @@ import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
 export default function VerifyEmailSignUp() {
   const [otp, setOtp] = useState<string[]>([]);
+  const onSubmit = () => {
+    router.push('/(auth)/(signup)/personalInformation');
+  };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -73,7 +77,7 @@ export default function VerifyEmailSignUp() {
             </CustomPressable>
           </View>
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton text="Submit" />
+            <CustomButton onPress={onSubmit} text="Submit" />
           </View>
           <PinKeypad pin={otp} setPin={setOtp} maxLength={6} allowPaste />
         </View>

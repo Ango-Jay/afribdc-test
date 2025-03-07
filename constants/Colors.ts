@@ -7,6 +7,6 @@ export const appColors = {
   error: 'rgba(240, 68, 56, 1)',
   'key-pad-gray': '#505050',
   'light-gray': '#7A7A7A',
-  'background-light-gray': '#E2E6EA',
+  'background-light-gray': 'rgba(247, 247, 247, 1)',
   yellow: '#E99B36',
 };

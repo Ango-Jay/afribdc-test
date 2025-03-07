@@ -6,6 +6,7 @@ import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
+import {router} from 'expo-router';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {View} from 'react-native';
 
@@ -22,12 +23,13 @@ export default function Login() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    router.push('/(main)/(tabs)/home');
   };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
         <View style={[globalUtilStyles.mb10]}>
-          <BackButton />
+          <BackButton onPress={() => router.navigate('/introduction')} />
         </View>
         <View
           style={[
@@ -80,6 +82,7 @@ export default function Login() {
             ]}>
             <View style={[globalUtilStyles.wfull]}>
               <CustomText
+                onPress={() => router.push('/(auth)/(forgotPassword)/email')}
                 weight={500}
                 style={[textColorStyle.highlight, globalUtilStyles.mlauto]}>
                 Forgot Password?
@@ -89,7 +92,10 @@ export default function Login() {
             <View style={[globalUtilStyles.itemsCenter]}>
               <CustomText weight={500}>
                 Don't have an account?{' '}
-                <CustomText weight={500} style={[textColorStyle.highlight]}>
+                <CustomText
+                  onPress={() => router.push('/(auth)/(signup)/phoneNumber')}
+                  weight={500}
+                  style={[textColorStyle.highlight]}>
                   Signup
                 </CustomText>
               </CustomText>
