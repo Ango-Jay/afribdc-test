@@ -11,7 +11,7 @@ import type {ReactNode} from 'react';
 import CustomPressable from './Pressable';
 import CustomText from '../Text';
 import {scale} from 'react-native-size-matters';
-import {bgColorStyle, textColorStyle} from '@/styles/color';
+import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 
 interface Props extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -49,6 +49,7 @@ const CustomButton = ({
           globalUtilStyles.justifyCenter,
           styles.btnBorderRadius,
           bgColorStyle.primary,
+          borderColorStyle.primary,
           props.style,
         ]}>
         {Boolean(text) ? (

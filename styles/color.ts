@@ -56,6 +56,9 @@ export const bgColorStyle = StyleSheet.create({
 });
 
 export const borderColorStyle = StyleSheet.create({
+  primary: {
+    borderColor: appColors.primary,
+  },
   secondary: {
     borderColor: appColors.secondary,
   },
