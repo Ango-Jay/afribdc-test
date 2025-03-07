@@ -8,7 +8,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, type SubmitHandler, useForm} from 'react-hook-form';
 import CustomTextInput from '@/components/shared/Form/CustomInput';
 import CustomButton from '@/components/shared/Button';
-import DateInput from '@/components/shared/Form/DateInput';
+import DateField from '@/components/shared/Form/DateField';
 
 export default function PersonalInformation() {
   const {
@@ -91,7 +91,7 @@ export default function PersonalInformation() {
             />
           </View>
           <View style={[globalUtilStyles.wfull]}>
-            <DateInput
+            <DateField
               labelTitle="Date of Birth"
               value={dateOfBirthValue}
               setFieldValue={setDateOfBirth}

@@ -24,7 +24,7 @@ interface Props {
   errorMessage?: string;
 }
 const today = new Date();
-const DateInput = ({labelTitle, value, setFieldValue, errorMessage}: Props) => {
+const DateField = ({labelTitle, value, setFieldValue, errorMessage}: Props) => {
   const [show, setShow] = useState(false);
   const animationValue = useSharedValue(0);
   useEffect(() => {
@@ -130,4 +130,4 @@ const DateInput = ({labelTitle, value, setFieldValue, errorMessage}: Props) => {
   );
 };
 
-export default DateInput;
+export default DateField;
