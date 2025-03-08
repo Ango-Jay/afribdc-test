@@ -13,6 +13,7 @@ export default function SetupPin() {
   const onSubmit = () => {
     router.push('/login');
   };
+  const isSubmitButtonDisabled = pin.length < 4;
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -47,7 +48,11 @@ export default function SetupPin() {
         <View style={[globalUtilStyles.gap6]}>
           <PinFieldGroup type="pin" pin={pin} maxLength={4} />
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton onPress={onSubmit} text="Proceed" />
+            <CustomButton
+              disabled={isSubmitButtonDisabled}
+              onPress={onSubmit}
+              text="Proceed"
+            />
           </View>
           <PinKeypad pin={pin} setPin={setPin} maxLength={4} />
         </View>

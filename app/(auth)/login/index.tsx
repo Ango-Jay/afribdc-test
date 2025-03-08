@@ -9,6 +9,8 @@ import {textColorStyle} from '@/styles/color';
 import {router} from 'expo-router';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {View} from 'react-native';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 export default function Login() {
   const {
@@ -20,6 +22,7 @@ export default function Login() {
       email: '',
       password: '',
     },
+    resolver: yupResolver(validationSchema),
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
@@ -48,7 +51,7 @@ export default function Login() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
@@ -65,9 +68,9 @@ export default function Login() {
               render={({field}) => (
                 <PasswordInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
-                  labelTitle="Create password"
+                  labelTitle="Password"
                   placeholder="Password"
                   errorMessage={errors.password?.message}
                 />
@@ -106,6 +109,23 @@ export default function Login() {
     </LayoutWithScroll>
   );
 }
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .test('test-email', 'Please enter a valid email', function (value) {
+      const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+      if (value) {
+        return regex.test(value);
+      }
+    })
+    .required('Required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be atleast 8 characters')
+    .required('Required'),
+});
 
 type FormValues = {
   email: string;

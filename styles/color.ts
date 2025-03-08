@@ -53,6 +53,9 @@ export const bgColorStyle = StyleSheet.create({
   gray: {
     backgroundColor: appColors.gray,
   },
+  'light-gray': {
+    backgroundColor: appColors['light-gray'],
+  },
   yellow: {
     backgroundColor: appColors.yellow,
   },

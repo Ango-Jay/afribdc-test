@@ -8,12 +8,15 @@ import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
-import {router} from 'expo-router';
+import maskEmail from '@/utils/maskEmail';
+import {router, useLocalSearchParams} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
 export default function VerifyEmailForgotPassword() {
+  const {email} = useLocalSearchParams<{email: string}>();
   const [otp, setOtp] = useState<string[]>([]);
+  const isSubmitButtonDisabled = otp.length < 6;
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -54,7 +57,7 @@ export default function VerifyEmailForgotPassword() {
                 width: '70%',
               },
             ]}>
-            We have sent an OTP verification code to ki*****w****@gmail.com
+            We have sent an OTP verification code to {maskEmail(email)}
           </CustomText>
         </View>
         <View
@@ -74,6 +77,7 @@ export default function VerifyEmailForgotPassword() {
           </View>
           <View style={[globalUtilStyles.wfull]}>
             <CustomButton
+              disabled={isSubmitButtonDisabled}
               onPress={() => router.push('/resetPassword')}
               text="Submit"
             />

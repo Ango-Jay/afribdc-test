@@ -26,13 +26,13 @@ export default function CreateAccount() {
     },
     resolver: yupResolver(validationSchema),
   });
-  const onSubmit: SubmitHandler<FormValues> = () => {
+  const onSubmit: SubmitHandler<FormValues> = data => {
     // do something
-    router.push('/(auth)/(signup)/verifyEmail');
+    router.push(`/(auth)/(signup)/verifyEmail?email=${data.email}`);
   };
   return (
     <LayoutWithScroll>
-      <View style={[globalUtilStyles.flex1]}>
+      <View style={[globalUtilStyles.flex1, globalUtilStyles.pb10]}>
         <View style={[globalUtilStyles.mb10]}>
           <BackButton
             onPress={() => router.navigate('/(auth)/(signup)/phoneNumber')}
@@ -55,7 +55,7 @@ export default function CreateAccount() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
@@ -72,7 +72,7 @@ export default function CreateAccount() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Username"
                   placeholder="Enter unique username"
@@ -88,7 +88,7 @@ export default function CreateAccount() {
               render={({field}) => (
                 <PasswordInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Create password"
                   placeholder="Password"
@@ -104,7 +104,7 @@ export default function CreateAccount() {
               render={({field}) => (
                 <PasswordInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Confirm password"
                   placeholder="Confirm password"

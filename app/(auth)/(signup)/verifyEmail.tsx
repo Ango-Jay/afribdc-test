@@ -8,15 +8,18 @@ import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
-import {router} from 'expo-router';
+import maskEmail from '@/utils/maskEmail';
+import {router, useLocalSearchParams} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
 export default function VerifyEmailSignUp() {
+  const {email} = useLocalSearchParams<{email: string}>();
   const [otp, setOtp] = useState<string[]>([]);
   const onSubmit = () => {
     router.push('/(auth)/(signup)/personalInformation');
   };
+  const isSubmitButtonDisabled = otp.length < 6;
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -57,7 +60,7 @@ export default function VerifyEmailSignUp() {
                 width: '70%',
               },
             ]}>
-            We have sent an 6-digit verification code to ki***w*****@gmail.com.
+            We have sent an 6-digit verification code to {maskEmail(email)}.
             Enter this code below
           </CustomText>
         </View>
@@ -77,7 +80,11 @@ export default function VerifyEmailSignUp() {
             </CustomPressable>
           </View>
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton onPress={onSubmit} text="Submit" />
+            <CustomButton
+              disabled={isSubmitButtonDisabled}
+              onPress={onSubmit}
+              text="Submit"
+            />
           </View>
           <PinKeypad pin={otp} setPin={setOtp} maxLength={6} allowPaste />
         </View>

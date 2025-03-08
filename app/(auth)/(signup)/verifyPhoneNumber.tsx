@@ -8,15 +8,17 @@ import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
 import {textColorStyle} from '@/styles/color';
-import {router} from 'expo-router';
+import {router, useLocalSearchParams} from 'expo-router';
 import {useState} from 'react';
 import {View} from 'react-native';
 
 export default function VerifyPhoneNumber() {
+  const {phonenumber} = useLocalSearchParams<{phonenumber: string}>();
   const [otp, setOtp] = useState<string[]>([]);
   const onSubmit = () => {
     router.push('/(auth)/(signup)/createAccount');
   };
+  const isSubmitButtonDisabled = otp.length < 6;
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
@@ -48,18 +50,35 @@ export default function VerifyPhoneNumber() {
             ]}>
             Please verify your phone number
           </CustomText>
-          <CustomText
-            weight={500}
+          <View
             style={[
-              globalUtilStyles.textCenter,
-              textColorStyle.gray,
-              {
-                width: '70%',
-              },
+              globalUtilStyles.wfull,
+              globalUtilStyles.itemsCenter,
+              globalUtilStyles.gap2,
             ]}>
-            We have sent an 6-digit verification code to +1 (506) 210 -0661
-            Enter this code below
-          </CustomText>
+            <CustomText
+              weight={500}
+              style={[
+                globalUtilStyles.textCenter,
+                textColorStyle.gray,
+                {
+                  width: '70%',
+                },
+              ]}>
+              We have sent an 6-digit verification code to +{phonenumber}
+            </CustomText>
+            <CustomText
+              weight={500}
+              style={[
+                globalUtilStyles.textCenter,
+                textColorStyle.gray,
+                {
+                  width: '70%',
+                },
+              ]}>
+              Enter this code below
+            </CustomText>
+          </View>
         </View>
         <View
           style={[
@@ -77,7 +96,11 @@ export default function VerifyPhoneNumber() {
             </CustomPressable>
           </View>
           <View style={[globalUtilStyles.wfull]}>
-            <CustomButton onPress={onSubmit} text="Submit" />
+            <CustomButton
+              disabled={isSubmitButtonDisabled}
+              onPress={onSubmit}
+              text="Submit"
+            />
           </View>
           <PinKeypad pin={otp} setPin={setOtp} maxLength={6} allowPaste />
         </View>

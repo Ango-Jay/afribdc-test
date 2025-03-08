@@ -88,6 +88,8 @@ const tabBarStyle = StyleSheet.create({
   },
   tabStyle: {
     paddingTop: 0,
+    height: scale(55),
+    alignItems: 'center',
     marginTop: 0,
     borderTopWidth: 0,
     backgroundColor: '#FFF',

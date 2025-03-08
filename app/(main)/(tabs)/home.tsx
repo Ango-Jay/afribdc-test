@@ -14,10 +14,11 @@ import PlusIcon from '@/assets/icons/plus.svg';
 import SwapIcon from '@/assets/icons/swap.svg';
 import BuySellIcon from '@/assets/icons/buy_sell.svg';
 import WithdrawIcon from '@/assets/icons/withdraw.svg';
+import {appColors} from '@/constants/Colors';
 
 export default function Home() {
   return (
-    <LayoutWithScroll backgroundColor="#EEEEEF">
+    <LayoutWithScroll backgroundColor={appColors['background-light-gray']}>
       <View style={[globalUtilStyles.flex1, globalUtilStyles.pb10]}>
         <View
           style={[
@@ -27,7 +28,7 @@ export default function Home() {
             globalUtilStyles.mb4,
           ]}>
           <UserIcon />
-          <CustomText size={22} weight={500}>
+          <CustomText size={20} weight={500}>
             Welcome back, Walter
           </CustomText>
           <CustomPressable>

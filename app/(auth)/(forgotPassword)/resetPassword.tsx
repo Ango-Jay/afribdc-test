@@ -36,7 +36,10 @@ export default function ResetPassword() {
             globalUtilStyles.itemsCenter,
             globalUtilStyles.mb10,
           ]}>
-          <BackButton style={[globalUtilStyles.absolute]} />
+          <BackButton
+            onPress={() => router.navigate('/(auth)/(forgotPassword)/email')}
+            style={[globalUtilStyles.absolute]}
+          />
           <CustomText size={20} style={[globalUtilStyles.mxauto]}>
             Reset Password
           </CustomText>
@@ -55,7 +58,7 @@ export default function ResetPassword() {
               render={({field}) => (
                 <PasswordInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Create password"
                   placeholder="Password"
@@ -71,7 +74,7 @@ export default function ResetPassword() {
               render={({field}) => (
                 <PasswordInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Confirm password"
                   placeholder="Confirm password"

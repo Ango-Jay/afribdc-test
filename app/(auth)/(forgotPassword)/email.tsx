@@ -22,9 +22,9 @@ export default function ForgotPasswordEmail() {
     },
     resolver: yupResolver(validationSchema),
   });
-  const onSubmit: SubmitHandler<FormValues> = () => {
+  const onSubmit: SubmitHandler<FormValues> = data => {
     // do something
-    router.push('/(auth)/(forgotPassword)/verifyEmail');
+    router.push(`/(auth)/(forgotPassword)/verifyEmail?email=${data.email}`);
   };
   return (
     <LayoutWithoutScroll>
@@ -64,7 +64,7 @@ export default function ForgotPasswordEmail() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Email"
                   placeholder="Email"
@@ -74,13 +74,13 @@ export default function ForgotPasswordEmail() {
               )}
             />
           </View>
-          <View style={[globalUtilStyles.wfull, globalUtilStyles.gap6]}>
+          <View style={[globalUtilStyles.wfull, globalUtilStyles.gap4]}>
             <CustomButton onPress={handleSubmit(onSubmit)} text="Next" />
             <CustomButton
               onPress={() => router.navigate('/login')}
               style={[bgColorStyle.white]}
               textStyle={{
-                size: 20,
+                size: 17,
                 weight: 400,
                 style: [textColorStyle.secondary],
               }}

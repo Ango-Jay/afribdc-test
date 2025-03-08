@@ -24,7 +24,9 @@ export default function PhoneNumber() {
       onValidate: value => setIsValid(value),
     });
     if (validPhoneNumber) {
-      router.push('/(auth)/(signup)/verifyPhoneNumber');
+      router.push(
+        `/(auth)/(signup)/verifyPhoneNumber?phonenumber=${phoneNumber.callingCode + phoneNumber.number}`,
+      );
     }
   };
   return (

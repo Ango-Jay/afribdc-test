@@ -80,7 +80,7 @@ export default function PersonalInformation() {
   };
   return (
     <LayoutWithScroll>
-      <View style={[globalUtilStyles.flex1]}>
+      <View style={[globalUtilStyles.flex1, globalUtilStyles.pb10]}>
         <View
           style={[
             globalUtilStyles.flexRow,
@@ -104,9 +104,9 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
-                  labelTitle="First name *"
+                  labelTitle="First name"
                   placeholder="first name"
                   errorMessage={errors.firstName?.message}
                 />
@@ -120,9 +120,9 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
-                  labelTitle="Last name *"
+                  labelTitle="Last name"
                   placeholder="last name"
                   errorMessage={errors.lastName?.message}
                 />
@@ -164,7 +164,7 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Address line 1"
                   placeholder="address line 1"
@@ -180,7 +180,7 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Address line 2 (Optional)"
                   placeholder="Address line 2"
@@ -196,7 +196,7 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="City"
                   placeholder="city"
@@ -212,7 +212,7 @@ export default function PersonalInformation() {
               render={({field}) => (
                 <CustomTextInput
                   value={field.value}
-                  onChange={field.onChange}
+                  onChangeText={field.onChange}
                   onBlur={field.onBlur}
                   labelTitle="Postal/Zip Code"
                   placeholder="Postal"

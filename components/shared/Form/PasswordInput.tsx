@@ -134,7 +134,7 @@ const PasswordInput = ({
           hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
           onPress={togglePassword}>
           {showPassword ? (
-            <EyeClosedIcon width={16} height={16} />
+            <EyeClosedIcon fill="#7A7A7A" width={16} height={16} />
           ) : (
             <EyeOpenIcon
               stroke={appColors['light-gray']}
