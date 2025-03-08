@@ -77,6 +77,9 @@ const globalUtilStyles = ScaledSheet.create({
   shrinkNone: {
     flexShrink: 0,
   },
+  gap1: {
+    gap: '4@s',
+  },
   gap2: {
     gap: '8@s',
   },

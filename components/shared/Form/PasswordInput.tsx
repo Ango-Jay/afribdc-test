@@ -111,7 +111,7 @@ const PasswordInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
-        <LockIcon />
+        <LockIcon fill="#7A7A7A" />
         <TextInput
           {...props}
           secureTextEntry={!showPassword}

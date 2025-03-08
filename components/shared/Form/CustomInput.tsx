@@ -114,7 +114,7 @@ const CustomTextInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
-        {isEmail && <EnvelopeIcon />}
+        {isEmail && <EnvelopeIcon fill="#6B777F" />}
         <TextInput
           {...props}
           onBlur={e => {
