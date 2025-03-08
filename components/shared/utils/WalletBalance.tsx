@@ -9,8 +9,9 @@ import EyeClosedIcon from '@/assets/icons/eye_closed.svg';
 import {useState} from 'react';
 import WalletIcon from '@/assets/icons/wallet_tab.svg';
 import {scale} from 'react-native-size-matters';
+import {formatToCurrencyString} from '@/utils/formatToCurrencyString';
 
-const balance = 0;
+const balance = '0.00';
 const WalletBalance = () => {
   const [showBalance, setShowBalance] = useState(false);
   const togglePassword = () => setShowBalance(prev => !prev);
@@ -58,7 +59,7 @@ const WalletBalance = () => {
             CAD.
           </CustomText>
           <CustomText size={24} weight={500} style={[textColorStyle.white]}>
-            {balance}
+            {showBalance ? formatToCurrencyString(balance, 2) : '*.**'}
           </CustomText>
           <CustomPressable
             style={[globalUtilStyles.ml2]}
