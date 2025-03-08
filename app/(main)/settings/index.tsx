@@ -14,8 +14,11 @@ import UserIcon from '@/assets/icons/user_stroke.svg';
 import PinIcon from '@/assets/icons/pin_code.svg';
 import LogoutIcon from '@/assets/icons/logout.svg';
 import ChevronIcon from '@/assets/icons/chevron.svg';
+import {useState} from 'react';
+import LogoutModal from '@/components/LogoutModal';
 
 export default function Settings() {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   return (
     <LayoutWithoutScroll backgroundColor={appColors['background-light-gray']}>
       <View style={[globalUtilStyles.flex1, globalUtilStyles.pb10]}>
@@ -143,6 +146,7 @@ export default function Settings() {
               bgColorStyle.white,
             ]}>
             <CustomPressable
+              onPress={() => setShowLogoutModal(true)}
               style={[
                 globalUtilStyles.flexRow,
                 globalUtilStyles.itemsCenter,
@@ -191,6 +195,12 @@ export default function Settings() {
           </View>
         </View>
       </View>
+      {showLogoutModal && (
+        <LogoutModal
+          showModal={showLogoutModal}
+          closeModal={() => setShowLogoutModal(false)}
+        />
+      )}
     </LayoutWithoutScroll>
   );
 }

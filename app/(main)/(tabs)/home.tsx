@@ -15,6 +15,7 @@ import SwapIcon from '@/assets/icons/swap.svg';
 import BuySellIcon from '@/assets/icons/buy_sell.svg';
 import WithdrawIcon from '@/assets/icons/withdraw.svg';
 import {appColors} from '@/constants/Colors';
+import {router} from 'expo-router';
 
 export default function Home() {
   return (
@@ -27,7 +28,9 @@ export default function Home() {
             globalUtilStyles.justifyBetween,
             globalUtilStyles.mb4,
           ]}>
-          <UserIcon />
+          <CustomPressable onPress={() => router.push('/settings')}>
+            <UserIcon />
+          </CustomPressable>
           <CustomText size={20} weight={500}>
             Welcome back, Walter
           </CustomText>
