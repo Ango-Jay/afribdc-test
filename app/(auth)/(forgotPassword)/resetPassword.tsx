@@ -10,6 +10,7 @@ import PasswordInput from '@/components/shared/Form/PasswordInput';
 import CustomButton from '@/components/shared/Button';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 import {router} from 'expo-router';
+import {displayToast} from '@/components/shared/toast-utils/displayToast';
 
 export default function ResetPassword() {
   const {
@@ -25,6 +26,10 @@ export default function ResetPassword() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    displayToast({
+      type: 'success',
+      message: 'Password reset successful',
+    });
     router.navigate('/login');
   };
   return (

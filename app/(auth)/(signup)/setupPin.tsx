@@ -3,6 +3,7 @@ import BackButton from '@/components/shared/Button/BackButton';
 import {PinFieldGroup, PinKeypad} from '@/components/shared/Form/Pin';
 import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
+import {displayToast} from '@/components/shared/toast-utils/displayToast';
 import globalUtilStyles from '@/styles';
 import {router} from 'expo-router';
 import {useState} from 'react';
@@ -11,6 +12,10 @@ import {View} from 'react-native';
 export default function SetupPin() {
   const [pin, setPin] = useState<string[]>([]);
   const onSubmit = () => {
+    displayToast({
+      type: 'success',
+      message: 'Pin setup complete',
+    });
     router.push('/login');
   };
   const isSubmitButtonDisabled = pin.length < 4;
