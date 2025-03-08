@@ -20,12 +20,14 @@ import Animated, {
 import {MotiView} from 'moti';
 import {appColors} from '@/constants/Colors';
 import EnvelopeIcon from '@/assets/icons/envelope.svg';
+import SearchIcon from '@/assets/icons/search.svg';
 interface Props extends TextInputProps {
   labelTitle?: string;
   isTouched?: boolean;
   isDisabled?: boolean;
   errorMessage?: string;
   isEmail?: boolean;
+  isSearch?: boolean;
   containerStyle?: ViewStyle;
 }
 const CustomTextInput = ({
@@ -34,6 +36,7 @@ const CustomTextInput = ({
   isDisabled,
   errorMessage,
   isEmail,
+  isSearch,
   containerStyle,
   ...props
 }: Props) => {
@@ -114,7 +117,8 @@ const CustomTextInput = ({
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
         ]}>
-        {isEmail && <EnvelopeIcon fill="#6B777F" />}
+        {isEmail && <EnvelopeIcon fill={appColors.gray} />}
+        {isSearch && <SearchIcon stroke={appColors.gray} />}
         <TextInput
           {...props}
           onBlur={e => {

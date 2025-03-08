@@ -215,7 +215,7 @@ const OptionsList = ({
               }}
               onChangeText={handleChangeSearchText}
               placeholder={'Search for option'}
-              // isSearch
+              isSearch
             />
           </View>
         </View>
@@ -223,6 +223,7 @@ const OptionsList = ({
           keyboardShouldPersistTaps="handled"
           keyExtractor={item => item.id}
           data={filteredOptions}
+          estimatedItemSize={58}
           renderItem={({item}) => (
             <TouchableHighlight
               onPress={() => {

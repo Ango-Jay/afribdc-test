@@ -40,6 +40,7 @@ export default function PreviewRates() {
             data={MOCK_DATA}
             keyExtractor={({id}) => `${id}`}
             renderItem={({item}) => <RateTile details={item} />}
+            estimatedItemSize={66.5}
           />
         </View>
         <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>

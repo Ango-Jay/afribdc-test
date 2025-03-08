@@ -223,7 +223,7 @@ export const CountryListModal = ({
               }}
               onChangeText={handleChangeSearchText}
               placeholder={'Search for country'}
-              // isSearch
+              isSearch
             />
           </View>
         </View>
@@ -231,6 +231,7 @@ export const CountryListModal = ({
           keyboardShouldPersistTaps="handled"
           keyExtractor={item => item.id}
           data={filteredOptions}
+          estimatedItemSize={58}
           renderItem={({item}) => (
             <TouchableHighlight
               onPress={() => {
