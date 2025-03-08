@@ -92,7 +92,7 @@ const tabBarStyle = StyleSheet.create({
     alignItems: 'center',
     marginTop: 0,
     borderTopWidth: 0,
-    backgroundColor: '#FFF',
+    backgroundColor: appColors['background-light-gray'],
   },
   tabBarLabelStyle: {
     fontWeight: 'bold',
