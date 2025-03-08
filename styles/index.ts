@@ -50,6 +50,9 @@ const globalUtilStyles = ScaledSheet.create({
   itemsStretch: {
     alignItems: 'stretch',
   },
+  itemsEnd: {
+    alignItems: 'flex-end',
+  },
   justifyCenter: {
     justifyContent: 'center',
   },
@@ -58,6 +61,9 @@ const globalUtilStyles = ScaledSheet.create({
   },
   justifySpaceAround: {
     justifyContent: 'space-around',
+  },
+  justifyEnd: {
+    justifyContent: 'flex-end',
   },
   flexWrap: {
     flexWrap: 'wrap',
@@ -421,6 +427,9 @@ const globalUtilStyles = ScaledSheet.create({
   mrauto: {
     marginRight: 'auto',
   },
+  mr0: {
+    marginRight: 0,
+  },
   mr1: {
     marginRight: '4@s',
   },
@@ -508,6 +517,15 @@ const globalUtilStyles = ScaledSheet.create({
   absolute: {
     position: 'absolute',
   },
+  top0: {
+    top: 0,
+  },
+  right0: {
+    right: 0,
+  },
+  right6: {
+    right: '24@s',
+  },
   // opacity
   opacityNone: {
     opacity: 0,
@@ -530,6 +548,10 @@ const globalUtilStyles = ScaledSheet.create({
         shadowColor: 'rgba(0, 0, 0, 0.1)',
       },
     }),
+  },
+  // overflow
+  overflowHidden: {
+    overflow: 'hidden',
   },
 });
 

@@ -4,6 +4,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import FlashMessage from 'react-native-flash-message';
+import {CustomFlashbar} from '@/components/shared/toast-utils/CustomFlashbar';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -25,10 +27,10 @@ export default function RootLayout() {
   if (!fontLoaded) {
     return null;
   }
-
   return (
     <GestureHandlerRootView>
       <Stack screenOptions={{headerShown: false}} />
+      <FlashMessage MessageComponent={CustomFlashbar} />
     </GestureHandlerRootView>
   );
 }

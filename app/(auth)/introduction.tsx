@@ -56,7 +56,9 @@ export default function Introduction() {
             text="View Best Rate Now"
           />
           <CustomButton
-            onPress={() => router.push('/(auth)/(signup)/phoneNumber')}
+            onPress={() => {
+              router.push('/(auth)/(signup)/phoneNumber');
+            }}
             text="Get started"
           />
         </View>

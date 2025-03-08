@@ -18,7 +18,7 @@ const CustomText = ({weight = 400, size = 15, children, ...props}: Props) => {
   return (
     <Text
       {...props}
-      style={[fontStyle, {fontSize: moderateScale(size, 0.1)}, props.style]}>
+      style={[fontStyle, {fontSize: moderateScale(size, 0.3)}, props.style]}>
       {children}
     </Text>
   );
