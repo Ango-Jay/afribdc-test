@@ -13,6 +13,7 @@ import {useGetCountries} from '@/services/queries/useGetCountries';
 import {useState} from 'react';
 import {getStates} from 'country-state-picker';
 import {router} from 'expo-router';
+import {eighteenYearsAgo, hundredYearsAgo} from '@/constants';
 
 export default function PersonalInformation() {
   const {
@@ -135,6 +136,8 @@ export default function PersonalInformation() {
               value={dateOfBirthValue}
               setFieldValue={setDateOfBirth}
               errorMessage={errors.dateOfBirth?.message}
+              minimumDate={hundredYearsAgo}
+              maximumDate={eighteenYearsAgo}
             />
           </View>
           <View style={[globalUtilStyles.wfull]}>
@@ -212,6 +215,7 @@ export default function PersonalInformation() {
               name="zipCode"
               render={({field}) => (
                 <CustomTextInput
+                  keyboardType="numeric"
                   value={field.value}
                   onChangeText={field.onChange}
                   onBlur={field.onBlur}

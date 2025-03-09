@@ -1,6 +1,12 @@
 import {appColors} from '@/constants/Colors';
 import globalUtilStyles from '@/styles';
-import {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import {
   StyleSheet,
   Keyboard,
@@ -13,9 +19,13 @@ import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import CustomTextInput, {inputStyle} from './CustomInput';
 import CustomPressable from '../Button/Pressable';
 import ChevronIcon from '@/assets/icons/chevron.svg';
-import {FlashList} from '@shopify/flash-list';
+import {
+  FlashList,
+  ListRenderItem,
+  ListRenderItemInfo,
+} from '@shopify/flash-list';
 import RNModal from 'react-native-modal';
-import {SCREEN_HEIGHT, STATUSBAR_HEIGHT} from '@/constants';
+import {SCREEN_HEIGHT, SCREEN_WIDTH, STATUSBAR_HEIGHT} from '@/constants';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 import CustomText from '../Text';
 import CustomImage from '../Image';
@@ -180,12 +190,28 @@ export const CountryListModal = ({
       );
     }
   };
+  const renderItem = useCallback(
+    ({item}: ListRenderItemInfo<Country>) => (
+      <CountryItem
+        item={item}
+        onSelect={() => {
+          selectItem(item);
+          setSearchText('');
+          setFilteredOptions(options);
+          Keyboard.dismiss();
+          closeModal();
+        }}
+      />
+    ),
+    [],
+  );
   return (
     <View
       style={[
         {
           height: MODAL_HEIGHT,
         },
+        globalUtilStyles.absolute,
       ]}>
       <RNModal
         style={{
@@ -252,45 +278,11 @@ export const CountryListModal = ({
               keyExtractor={item => item.id}
               data={filteredOptions}
               estimatedItemSize={63}
-              renderItem={({item}) => (
-                <TouchableHighlight
-                  onPress={() => {
-                    selectItem(item);
-                    setSearchText('');
-                    setFilteredOptions(options);
-                    Keyboard.dismiss();
-                    closeModal();
-                  }}
-                  underlayColor={appColors['primary-highlight']}
-                  style={[
-                    globalUtilStyles.wfull,
-                    globalUtilStyles.pt4,
-                    globalUtilStyles.pb4,
-                    globalUtilStyles.px4,
-                    globalUtilStyles.borderBottom1,
-                    borderColorStyle['light-gray'],
-                  ]}>
-                  <View
-                    style={[
-                      globalUtilStyles.flex1,
-                      globalUtilStyles.gap2,
-                      globalUtilStyles.flexRow,
-                      globalUtilStyles.itemsCenter,
-                    ]}>
-                    {item.icon && (
-                      <CustomImage
-                        source={{uri: item.icon}}
-                        style={[
-                          styles.countryFlagImage,
-                          globalUtilStyles.borderhalf,
-                          borderColorStyle['light-gray'],
-                        ]}
-                      />
-                    )}
-                    <CustomText>{item.name}</CustomText>
-                  </View>
-                </TouchableHighlight>
-              )}
+              estimatedListSize={{
+                height: MODAL_HEIGHT - scale(70),
+                width: SCREEN_WIDTH,
+              }}
+              renderItem={renderItem}
               ListEmptyComponent={<CustomText>No country found</CustomText>}
             />
           </View>
@@ -300,6 +292,43 @@ export const CountryListModal = ({
     </View>
   );
 };
+interface RenderCountryListProps {
+  item: Country;
+  onSelect: () => void;
+}
+const CountryItem = ({item, onSelect}: RenderCountryListProps) => (
+  <TouchableHighlight
+    onPress={onSelect}
+    underlayColor={appColors['primary-highlight']}
+    style={[
+      globalUtilStyles.wfull,
+      globalUtilStyles.pt4,
+      globalUtilStyles.pb4,
+      globalUtilStyles.px4,
+      globalUtilStyles.borderBottom1,
+      borderColorStyle['light-gray'],
+    ]}>
+    <View
+      style={[
+        globalUtilStyles.flex1,
+        globalUtilStyles.gap2,
+        globalUtilStyles.flexRow,
+        globalUtilStyles.itemsCenter,
+      ]}>
+      {item.icon && (
+        <CustomImage
+          source={{uri: item.icon}}
+          style={[
+            styles.countryFlagImage,
+            globalUtilStyles.borderhalf,
+            borderColorStyle['light-gray'],
+          ]}
+        />
+      )}
+      <CustomText>{item.name}</CustomText>
+    </View>
+  </TouchableHighlight>
+);
 const styles = StyleSheet.create({
   countryFlagImage: {
     width: scale(20),

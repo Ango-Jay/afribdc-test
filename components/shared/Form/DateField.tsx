@@ -22,9 +22,18 @@ interface Props {
   value: string;
   setFieldValue: (value: string) => void;
   errorMessage?: string;
+  maximumDate?: Date;
+  minimumDate?: Date;
 }
 const today = new Date();
-const DateField = ({labelTitle, value, setFieldValue, errorMessage}: Props) => {
+const DateField = ({
+  labelTitle,
+  value,
+  setFieldValue,
+  errorMessage,
+  maximumDate,
+  minimumDate,
+}: Props) => {
   const [show, setShow] = useState(false);
   const animationValue = useSharedValue(0);
   useEffect(() => {
@@ -109,6 +118,9 @@ const DateField = ({labelTitle, value, setFieldValue, errorMessage}: Props) => {
         <DatePicker
           modal
           open={show}
+          mode="date"
+          minimumDate={minimumDate}
+          maximumDate={maximumDate}
           date={value ? new Date(value) : today}
           onConfirm={date => {
             setShow(false);

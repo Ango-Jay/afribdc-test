@@ -1,5 +1,5 @@
 import {appColors} from '@/constants/Colors';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Animated, {
   Easing,
   Extrapolation,
@@ -15,9 +15,9 @@ import {MotiView} from 'moti';
 import CustomTextInput, {inputStyle} from './CustomInput';
 import CaretIcon from '@/assets/icons/caret_solid.svg';
 import CustomPressable from '../Button/Pressable';
-import {FlashList} from '@shopify/flash-list';
+import {FlashList, ListRenderItemInfo} from '@shopify/flash-list';
 import RNModal from 'react-native-modal';
-import {SCREEN_HEIGHT, STATUSBAR_HEIGHT} from '@/constants';
+import {SCREEN_HEIGHT, SCREEN_WIDTH, STATUSBAR_HEIGHT} from '@/constants';
 import {Keyboard, TouchableHighlight, View} from 'react-native';
 import BackButton from '../Button/BackButton';
 import CustomImage from '../Image';
@@ -165,12 +165,55 @@ const OptionsList = ({
       );
     }
   };
+  const renderItem = useCallback(
+    ({item}: ListRenderItemInfo<Option>) => (
+      <TouchableHighlight
+        onPress={() => {
+          selectOption(item.value, item);
+          setSearchText('');
+          setFilteredOptions(options);
+          Keyboard.dismiss();
+          closeModal();
+        }}
+        underlayColor={appColors['primary-highlight']}
+        style={[
+          globalUtilStyles.wfull,
+          globalUtilStyles.pt4,
+          globalUtilStyles.pb4,
+          globalUtilStyles.px4,
+          globalUtilStyles.borderBottom1,
+          borderColorStyle['light-gray'],
+        ]}>
+        <View
+          style={[
+            globalUtilStyles.flex1,
+            globalUtilStyles.gap2,
+            globalUtilStyles.flexRow,
+            globalUtilStyles.itemsCenter,
+          ]}>
+          {item.icon && (
+            <CustomImage
+              source={{uri: item.icon}}
+              style={[
+                styles.iconDimensions,
+                globalUtilStyles.borderhalf,
+                borderColorStyle['light-gray'],
+              ]}
+            />
+          )}
+          <CustomText>{item.name}</CustomText>
+        </View>
+      </TouchableHighlight>
+    ),
+    [],
+  );
   return (
     <View
       style={[
         {
           height: MODAL_HEIGHT,
         },
+        globalUtilStyles.absolute,
       ]}>
       <RNModal
         style={{
@@ -236,45 +279,11 @@ const OptionsList = ({
               keyExtractor={item => item.id}
               data={filteredOptions}
               estimatedItemSize={58}
-              renderItem={({item}) => (
-                <TouchableHighlight
-                  onPress={() => {
-                    selectOption(item.value, item);
-                    setSearchText('');
-                    setFilteredOptions(options);
-                    Keyboard.dismiss();
-                    closeModal();
-                  }}
-                  underlayColor={appColors['primary-highlight']}
-                  style={[
-                    globalUtilStyles.wfull,
-                    globalUtilStyles.pt4,
-                    globalUtilStyles.pb4,
-                    globalUtilStyles.px4,
-                    globalUtilStyles.borderBottom1,
-                    borderColorStyle['light-gray'],
-                  ]}>
-                  <View
-                    style={[
-                      globalUtilStyles.flex1,
-                      globalUtilStyles.gap2,
-                      globalUtilStyles.flexRow,
-                      globalUtilStyles.itemsCenter,
-                    ]}>
-                    {item.icon && (
-                      <CustomImage
-                        source={{uri: item.icon}}
-                        style={[
-                          styles.iconDimensions,
-                          globalUtilStyles.borderhalf,
-                          borderColorStyle['light-gray'],
-                        ]}
-                      />
-                    )}
-                    <CustomText>{item.name}</CustomText>
-                  </View>
-                </TouchableHighlight>
-              )}
+              estimatedListSize={{
+                height: MODAL_HEIGHT - scale(70),
+                width: SCREEN_WIDTH,
+              }}
+              renderItem={renderItem}
             />
           </View>
         </Animated.View>
