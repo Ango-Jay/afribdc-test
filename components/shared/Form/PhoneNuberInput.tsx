@@ -1,6 +1,6 @@
 import {appColors} from '@/constants/Colors';
 import globalUtilStyles from '@/styles';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Keyboard,
@@ -158,14 +158,14 @@ interface CountryListModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
 }
-
+const MODAL_HEIGHT = (SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6;
 export const CountryListModal = ({
   selectItem,
   options,
   closeModal,
   isModalOpen,
 }: CountryListModalProps) => {
-  const ViewHeight = useSharedValue((SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6);
+  const ViewHeight = useSharedValue(MODAL_HEIGHT);
   const [searchText, setSearchText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
 
@@ -181,75 +181,72 @@ export const CountryListModal = ({
     }
   };
   return (
-    <RNModal
-      style={{
-        justifyContent: 'flex-end',
-        margin: 0,
-      }}
-      isVisible={isModalOpen}
-      animationInTiming={500}
-      animationOutTiming={500}
-      backdropTransitionInTiming={800}
-      backdropTransitionOutTiming={800}
-      backdropOpacity={0.2}
-      backdropColor="#101010"
-      deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
-      onBackdropPress={() => closeModal()}
-      statusBarTranslucent
-      swipeDirection={'down'}
-      onSwipeComplete={closeModal}>
-      {/* <DismissKeyboard> */}
-      <Animated.View
-        style={[
-          globalUtilStyles.flex1,
-          bgColorStyle.white,
-          globalUtilStyles.roundedxl,
-          globalUtilStyles.px4,
-          globalUtilStyles.pt6,
-          globalUtilStyles.pb8,
-          globalUtilStyles.wfull,
-          {height: ViewHeight, minHeight: 20},
-        ]}>
-        <View style={[globalUtilStyles.wfull]}>
-          <View
-            style={[
-              globalUtilStyles.flexRow,
-              globalUtilStyles.itemsCenter,
-              globalUtilStyles.wfull,
-            ]}>
-            <BackButton
-              onPress={closeModal}
-              style={globalUtilStyles.absolute}
-            />
-            <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
-              Select a Country
-            </CustomText>
-          </View>
-          <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
-            <CustomTextInput
-              value={searchText}
-              onFocus={() => {
-                ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
-              }}
-              onBlur={() => {
-                ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
-              }}
-              onChangeText={handleChangeSearchText}
-              placeholder={'Search for country'}
-              isSearch
-            />
-          </View>
-        </View>
-        <View
+    <View
+      style={[
+        {
+          height: MODAL_HEIGHT,
+        },
+      ]}>
+      <RNModal
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}
+        isVisible={isModalOpen}
+        animationInTiming={500}
+        animationOutTiming={500}
+        backdropTransitionInTiming={800}
+        backdropTransitionOutTiming={800}
+        backdropOpacity={0.2}
+        backdropColor="#101010"
+        deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
+        onBackdropPress={() => closeModal()}
+        statusBarTranslucent
+        swipeDirection={'down'}
+        onSwipeComplete={closeModal}>
+        {/* <DismissKeyboard> */}
+        <Animated.View
           style={[
-            globalUtilStyles.flexRow,
-            globalUtilStyles.grow,
+            globalUtilStyles.flex1,
+            bgColorStyle.white,
+            globalUtilStyles.roundedxl,
+            globalUtilStyles.px4,
+            globalUtilStyles.pt6,
+            globalUtilStyles.pb8,
             globalUtilStyles.wfull,
-            {
-              minHeight: 30,
-            },
+            {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
           ]}>
-          {options.length > 0 && (
+          <View style={[globalUtilStyles.wfull]}>
+            <View
+              style={[
+                globalUtilStyles.flexRow,
+                globalUtilStyles.itemsCenter,
+                globalUtilStyles.wfull,
+              ]}>
+              <BackButton
+                onPress={closeModal}
+                style={globalUtilStyles.absolute}
+              />
+              <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
+                Select a Country
+              </CustomText>
+            </View>
+            <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
+              <CustomTextInput
+                value={searchText}
+                onFocus={() => {
+                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
+                }}
+                onBlur={() => {
+                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
+                }}
+                onChangeText={handleChangeSearchText}
+                placeholder={'Search for country'}
+                isSearch
+              />
+            </View>
+          </View>
+          <View style={[globalUtilStyles.flex1]}>
             <FlashList
               keyboardShouldPersistTaps="handled"
               keyExtractor={item => item.id}
@@ -296,11 +293,11 @@ export const CountryListModal = ({
               )}
               ListEmptyComponent={<CustomText>No country found</CustomText>}
             />
-          )}
-        </View>
-      </Animated.View>
-      {/* </DismissKeyboard> */}
-    </RNModal>
+          </View>
+        </Animated.View>
+        {/* </DismissKeyboard> */}
+      </RNModal>
+    </View>
   );
 };
 const styles = StyleSheet.create({

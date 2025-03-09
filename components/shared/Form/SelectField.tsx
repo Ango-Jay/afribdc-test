@@ -31,6 +31,7 @@ interface Props {
   selectOption: (value: string, option?: Option) => void;
   placeholder?: string;
   errorMessage?: string;
+  disabled?: boolean;
 }
 const SelectField = ({
   labelTitle,
@@ -39,6 +40,7 @@ const SelectField = ({
   selectOption,
   placeholder,
   errorMessage,
+  disabled,
 }: Props) => {
   const [show, setShow] = useState(false);
   const animationValue = useSharedValue(0);
@@ -98,9 +100,12 @@ const SelectField = ({
             globalUtilStyles.roundedlg,
             inputStyle.inputContainerHeight,
             globalUtilStyles.boxShadow,
+            disabled && bgColorStyle['background-light-gray'],
+            disabled && globalUtilStyles.opacity70,
             animatedBorderStyle,
           ]}>
           <CustomPressable
+            disabled={disabled}
             onPress={() => {
               setShow(true);
             }}
@@ -146,7 +151,7 @@ const OptionsList = ({
   options,
   selectOption,
 }: OptionsListProps) => {
-  const ViewHeight = useSharedValue((SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6);
+  const ViewHeight = useSharedValue(MODAL_HEIGHT);
   const [searchText, setSearchText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
   const handleChangeSearchText = (value: string) => {
@@ -161,114 +166,124 @@ const OptionsList = ({
     }
   };
   return (
-    <RNModal
-      style={{
-        justifyContent: 'flex-end',
-        margin: 0,
-      }}
-      isVisible={isModalOpen}
-      animationInTiming={500}
-      animationOutTiming={500}
-      backdropTransitionInTiming={800}
-      backdropTransitionOutTiming={800}
-      backdropOpacity={0.2}
-      backdropColor="#101010"
-      deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
-      onBackdropPress={() => closeModal()}
-      statusBarTranslucent
-      swipeDirection={'down'}
-      onSwipeComplete={closeModal}>
-      {/* <DismissKeyboard> */}
-      <Animated.View
-        style={[
-          globalUtilStyles.flex1,
-          bgColorStyle.white,
-          globalUtilStyles.roundedxl,
-          globalUtilStyles.px4,
-          globalUtilStyles.pt6,
-          globalUtilStyles.pb8,
-          {maxHeight: ViewHeight},
-        ]}>
-        <View style={[globalUtilStyles.wfull]}>
-          <View
-            style={[
-              globalUtilStyles.flexRow,
-              globalUtilStyles.itemsCenter,
-              globalUtilStyles.wfull,
-            ]}>
-            <BackButton
-              onPress={closeModal}
-              style={globalUtilStyles.absolute}
-            />
-            <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
-              Select option
-            </CustomText>
-          </View>
-          <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
-            <CustomTextInput
-              value={searchText}
-              onFocus={() => {
-                ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
-              }}
-              onBlur={() => {
-                ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
-              }}
-              onChangeText={handleChangeSearchText}
-              placeholder={'Search for option'}
-              isSearch
-            />
-          </View>
-        </View>
-        <FlashList
-          keyboardShouldPersistTaps="handled"
-          keyExtractor={item => item.id}
-          data={filteredOptions}
-          estimatedItemSize={58}
-          renderItem={({item}) => (
-            <TouchableHighlight
-              onPress={() => {
-                selectOption(item.value, item);
-                setSearchText('');
-                setFilteredOptions(options);
-                Keyboard.dismiss();
-                closeModal();
-              }}
-              underlayColor={appColors['primary-highlight']}
+    <View
+      style={[
+        {
+          height: MODAL_HEIGHT,
+        },
+      ]}>
+      <RNModal
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}
+        isVisible={isModalOpen}
+        animationInTiming={500}
+        animationOutTiming={500}
+        backdropTransitionInTiming={800}
+        backdropTransitionOutTiming={800}
+        backdropOpacity={0.2}
+        backdropColor="#101010"
+        deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
+        onBackdropPress={() => closeModal()}
+        statusBarTranslucent
+        swipeDirection={'down'}
+        onSwipeComplete={closeModal}>
+        {/* <DismissKeyboard> */}
+        <Animated.View
+          style={[
+            globalUtilStyles.flex1,
+            bgColorStyle.white,
+            globalUtilStyles.roundedxl,
+            globalUtilStyles.px4,
+            globalUtilStyles.pt6,
+            globalUtilStyles.pb8,
+            {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
+          ]}>
+          <View style={[globalUtilStyles.wfull]}>
+            <View
               style={[
+                globalUtilStyles.flexRow,
+                globalUtilStyles.itemsCenter,
                 globalUtilStyles.wfull,
-                globalUtilStyles.pt4,
-                globalUtilStyles.pb4,
-                globalUtilStyles.px4,
-                globalUtilStyles.borderBottom1,
-                borderColorStyle['light-gray'],
               ]}>
-              <View
-                style={[
-                  globalUtilStyles.flex1,
-                  globalUtilStyles.gap2,
-                  globalUtilStyles.flexRow,
-                  globalUtilStyles.itemsCenter,
-                ]}>
-                {item.icon && (
-                  <CustomImage
-                    source={{uri: item.icon}}
+              <BackButton
+                onPress={closeModal}
+                style={globalUtilStyles.absolute}
+              />
+              <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
+                Select option
+              </CustomText>
+            </View>
+            <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
+              <CustomTextInput
+                value={searchText}
+                onFocus={() => {
+                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
+                }}
+                onBlur={() => {
+                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
+                }}
+                onChangeText={handleChangeSearchText}
+                placeholder={'Search for option'}
+                isSearch
+              />
+            </View>
+          </View>
+          <View style={[globalUtilStyles.flex1]}>
+            <FlashList
+              keyboardShouldPersistTaps="handled"
+              keyExtractor={item => item.id}
+              data={filteredOptions}
+              estimatedItemSize={58}
+              renderItem={({item}) => (
+                <TouchableHighlight
+                  onPress={() => {
+                    selectOption(item.value, item);
+                    setSearchText('');
+                    setFilteredOptions(options);
+                    Keyboard.dismiss();
+                    closeModal();
+                  }}
+                  underlayColor={appColors['primary-highlight']}
+                  style={[
+                    globalUtilStyles.wfull,
+                    globalUtilStyles.pt4,
+                    globalUtilStyles.pb4,
+                    globalUtilStyles.px4,
+                    globalUtilStyles.borderBottom1,
+                    borderColorStyle['light-gray'],
+                  ]}>
+                  <View
                     style={[
-                      styles.iconDimensions,
-                      globalUtilStyles.borderhalf,
-                      borderColorStyle['light-gray'],
-                    ]}
-                  />
-                )}
-                <CustomText>{item.name}</CustomText>
-              </View>
-            </TouchableHighlight>
-          )}
-        />
-      </Animated.View>
-      {/* </DismissKeyboard> */}
-    </RNModal>
+                      globalUtilStyles.flex1,
+                      globalUtilStyles.gap2,
+                      globalUtilStyles.flexRow,
+                      globalUtilStyles.itemsCenter,
+                    ]}>
+                    {item.icon && (
+                      <CustomImage
+                        source={{uri: item.icon}}
+                        style={[
+                          styles.iconDimensions,
+                          globalUtilStyles.borderhalf,
+                          borderColorStyle['light-gray'],
+                        ]}
+                      />
+                    )}
+                    <CustomText>{item.name}</CustomText>
+                  </View>
+                </TouchableHighlight>
+              )}
+            />
+          </View>
+        </Animated.View>
+        {/* </DismissKeyboard> */}
+      </RNModal>
+    </View>
   );
 };
+const MODAL_HEIGHT = (SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6;
 const styles = StyleSheet.create({
   iconDimensions: {
     width: scale(20),

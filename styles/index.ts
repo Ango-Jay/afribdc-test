@@ -539,6 +539,9 @@ const globalUtilStyles = ScaledSheet.create({
   opacityFull: {
     opacity: 1,
   },
+  opacity70: {
+    opacity: 0.7,
+  },
   // box shadow
   boxShadow: {
     backgroundColor: '#fff',

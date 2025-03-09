@@ -155,6 +155,7 @@ export default function PersonalInformation() {
               selectOption={setState}
               options={stateOptions}
               errorMessage={errors.state?.message}
+              disabled={!values.countryOfResidence}
             />
           </View>
           <View style={[globalUtilStyles.wfull]}>
