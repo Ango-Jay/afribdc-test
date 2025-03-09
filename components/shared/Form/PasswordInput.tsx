@@ -104,9 +104,8 @@ const PasswordInput = ({
           globalUtilStyles.flexRow,
           globalUtilStyles.gap3,
           globalUtilStyles.itemsCenter,
-          globalUtilStyles.roundedlg,
           globalUtilStyles.px3,
-          globalUtilStyles.py2,
+          globalUtilStyles.roundedlg,
           inputStyle.inputContainerHeight,
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
@@ -128,10 +127,15 @@ const PasswordInput = ({
           //     ? "rgba(255, 255, 255, 0.60)"
           //     : "rgba(255, 255, 255, 0.40)"
           // }
-          style={[globalUtilStyles.flex1]}
+          style={[
+            globalUtilStyles.flex1,
+            globalUtilStyles.hfull,
+            globalUtilStyles.roundedlg,
+          ]}
         />
         <CustomPressable
-          hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
+          style={[globalUtilStyles.absolute, globalUtilStyles.right3]}
+          hitSlop={20}
           onPress={togglePassword}>
           {showPassword ? (
             <EyeClosedIcon fill="#7A7A7A" width={16} height={16} />

@@ -40,7 +40,7 @@ export default function CreateAccount() {
       <View style={[globalUtilStyles.flex1, globalUtilStyles.pb10]}>
         <View style={[globalUtilStyles.mb10]}>
           <BackButton
-            onPress={() => router.navigate('/(auth)/(signup)/phoneNumber')}
+            onPress={() => router.dismissTo('/(auth)/(signup)/phoneNumber')}
           />
         </View>
         <View
@@ -129,7 +129,7 @@ export default function CreateAccount() {
               <CustomText weight={500}>
                 Already have an account?{' '}
                 <CustomText
-                  onPress={() => router.navigate('/login')}
+                  onPress={() => router.dismissTo('/login')}
                   weight={500}
                   style={[textColorStyle.highlight]}>
                   Login

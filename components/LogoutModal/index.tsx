@@ -15,7 +15,7 @@ interface Props {
 }
 const LogoutModal = ({showModal, closeModal}: Props) => {
   const logOutUser = () => {
-    router.navigate('/login');
+    router.dismissTo('/login');
     closeModal();
   };
   return (

@@ -30,7 +30,7 @@ export default function ResetPassword() {
       type: 'success',
       message: 'Password reset successful',
     });
-    router.navigate('/login');
+    router.dismissTo('/login');
   };
   return (
     <LayoutWithScroll>
@@ -42,7 +42,7 @@ export default function ResetPassword() {
             globalUtilStyles.mb10,
           ]}>
           <BackButton
-            onPress={() => router.navigate('/(auth)/(forgotPassword)/email')}
+            onPress={() => router.dismissTo('/(auth)/(forgotPassword)/email')}
             style={[globalUtilStyles.absolute]}
           />
           <CustomText size={20} style={[globalUtilStyles.mxauto]}>
@@ -94,7 +94,7 @@ export default function ResetPassword() {
               text="Reset Password"
             />
             <CustomButton
-              onPress={() => router.navigate('/(auth)/(forgotPassword)/email')}
+              onPress={() => router.dismissTo('/(auth)/(forgotPassword)/email')}
               containerStyle={[
                 globalUtilStyles.border1,
                 borderColorStyle.secondary,

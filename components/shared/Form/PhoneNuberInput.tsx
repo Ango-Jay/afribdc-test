@@ -61,7 +61,13 @@ const PhoneNumberInput = ({
     }));
   };
   return (
-    <View style={[globalUtilStyles.flexRow, globalUtilStyles.gap2]}>
+    <View
+      style={[
+        globalUtilStyles.flexRow,
+        globalUtilStyles.gap2,
+        globalUtilStyles.wfull,
+        inputStyle.inputContainerHeight,
+      ]}>
       <CountrySelect
         country={{
           callingCode: phoneNumber.callingCode,
@@ -93,38 +99,43 @@ const CountrySelect = ({country, setCountry}: CountrySelectProps) => {
   const activeCountry = countries.find(item => item.id === country.countryCode);
   return (
     <>
-      <View style={[{width: '30%', minWidth: scale(100)}]}>
-        <CustomPressable onPress={() => setShowModal(true)}>
-          <View
-            style={[
-              globalUtilStyles.flexRow,
-              globalUtilStyles.gap2,
-              globalUtilStyles.itemsCenter,
-              globalUtilStyles.roundedlg,
-              globalUtilStyles.px3,
-              globalUtilStyles.py2,
-              inputStyle.inputContainerHeight,
-              globalUtilStyles.boxShadow,
-            ]}>
-            {!!activeCountry?.icon && (
-              <>
-                <CustomImage
-                  source={{uri: activeCountry.icon}}
-                  style={[
-                    styles.countryFlagImage,
-                    globalUtilStyles.borderhalf,
-                    borderColorStyle['light-gray'],
-                  ]}
-                />
-                <CustomText style={[textColorStyle.gray]}>
-                  +{country.callingCode}
-                </CustomText>
-              </>
-            )}
-            <ChevronIcon />
-          </View>
+      <View
+        style={[
+          {width: '30%', minWidth: scale(100)},
+          globalUtilStyles.roundedlg,
+          globalUtilStyles.hfull,
+          globalUtilStyles.boxShadow,
+        ]}>
+        <CustomPressable
+          style={[
+            globalUtilStyles.hfull,
+            globalUtilStyles.flexRow,
+            globalUtilStyles.gap2,
+            globalUtilStyles.itemsCenter,
+            globalUtilStyles.roundedlg,
+            globalUtilStyles.px3,
+            globalUtilStyles.py2,
+          ]}
+          onPress={() => setShowModal(true)}>
+          {!!activeCountry?.icon && (
+            <>
+              <CustomImage
+                source={{uri: activeCountry.icon}}
+                style={[
+                  styles.countryFlagImage,
+                  globalUtilStyles.borderhalf,
+                  borderColorStyle['light-gray'],
+                ]}
+              />
+              <CustomText style={[textColorStyle.gray]}>
+                +{country.callingCode || '234'}
+              </CustomText>
+            </>
+          )}
+          <ChevronIcon />
         </CustomPressable>
       </View>
+
       {showModal && (
         <CountryListModal
           isModalOpen={showModal}
@@ -157,6 +168,7 @@ export const CountryListModal = ({
   const ViewHeight = useSharedValue((SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6);
   const [searchText, setSearchText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
+
   const handleChangeSearchText = (value: string) => {
     setSearchText(value);
     if (value) {
@@ -195,7 +207,8 @@ export const CountryListModal = ({
           globalUtilStyles.px4,
           globalUtilStyles.pt6,
           globalUtilStyles.pb8,
-          {maxHeight: ViewHeight},
+          globalUtilStyles.wfull,
+          {height: ViewHeight, minHeight: 20},
         ]}>
         <View style={[globalUtilStyles.wfull]}>
           <View
@@ -227,51 +240,64 @@ export const CountryListModal = ({
             />
           </View>
         </View>
-        <FlashList
-          keyboardShouldPersistTaps="handled"
-          keyExtractor={item => item.id}
-          data={filteredOptions}
-          estimatedItemSize={58}
-          renderItem={({item}) => (
-            <TouchableHighlight
-              onPress={() => {
-                selectItem(item);
-                setSearchText('');
-                setFilteredOptions(options);
-                Keyboard.dismiss();
-                closeModal();
-              }}
-              underlayColor={appColors['primary-highlight']}
-              style={[
-                globalUtilStyles.wfull,
-                globalUtilStyles.pt4,
-                globalUtilStyles.pb4,
-                globalUtilStyles.px4,
-                globalUtilStyles.borderBottom1,
-                borderColorStyle['light-gray'],
-              ]}>
-              <View
-                style={[
-                  globalUtilStyles.flex1,
-                  globalUtilStyles.gap2,
-                  globalUtilStyles.flexRow,
-                  globalUtilStyles.itemsCenter,
-                ]}>
-                {item.icon && (
-                  <CustomImage
-                    source={{uri: item.icon}}
+        <View
+          style={[
+            globalUtilStyles.flexRow,
+            globalUtilStyles.grow,
+            globalUtilStyles.wfull,
+            {
+              minHeight: 30,
+            },
+          ]}>
+          {options.length > 0 && (
+            <FlashList
+              keyboardShouldPersistTaps="handled"
+              keyExtractor={item => item.id}
+              data={filteredOptions}
+              estimatedItemSize={63}
+              renderItem={({item}) => (
+                <TouchableHighlight
+                  onPress={() => {
+                    selectItem(item);
+                    setSearchText('');
+                    setFilteredOptions(options);
+                    Keyboard.dismiss();
+                    closeModal();
+                  }}
+                  underlayColor={appColors['primary-highlight']}
+                  style={[
+                    globalUtilStyles.wfull,
+                    globalUtilStyles.pt4,
+                    globalUtilStyles.pb4,
+                    globalUtilStyles.px4,
+                    globalUtilStyles.borderBottom1,
+                    borderColorStyle['light-gray'],
+                  ]}>
+                  <View
                     style={[
-                      styles.countryFlagImage,
-                      globalUtilStyles.borderhalf,
-                      borderColorStyle['light-gray'],
-                    ]}
-                  />
-                )}
-                <CustomText>{item.name}</CustomText>
-              </View>
-            </TouchableHighlight>
+                      globalUtilStyles.flex1,
+                      globalUtilStyles.gap2,
+                      globalUtilStyles.flexRow,
+                      globalUtilStyles.itemsCenter,
+                    ]}>
+                    {item.icon && (
+                      <CustomImage
+                        source={{uri: item.icon}}
+                        style={[
+                          styles.countryFlagImage,
+                          globalUtilStyles.borderhalf,
+                          borderColorStyle['light-gray'],
+                        ]}
+                      />
+                    )}
+                    <CustomText>{item.name}</CustomText>
+                  </View>
+                </TouchableHighlight>
+              )}
+              ListEmptyComponent={<CustomText>No country found</CustomText>}
+            />
           )}
-        />
+        </View>
       </Animated.View>
       {/* </DismissKeyboard> */}
     </RNModal>

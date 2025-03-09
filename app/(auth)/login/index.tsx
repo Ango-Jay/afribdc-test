@@ -17,6 +17,7 @@ export default function Login() {
     control,
     formState: {errors},
     handleSubmit,
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       email: '',
@@ -26,13 +27,14 @@ export default function Login() {
   });
   const onSubmit: SubmitHandler<FormValues> = () => {
     // do something
+    reset();
     router.push('/(main)/(tabs)/home');
   };
   return (
     <LayoutWithScroll>
       <View style={[globalUtilStyles.flex1]}>
         <View style={[globalUtilStyles.mb10]}>
-          <BackButton onPress={() => router.navigate('/introduction')} />
+          <BackButton onPress={() => router.dismissTo('/introduction')} />
         </View>
         <View
           style={[

@@ -526,6 +526,9 @@ const globalUtilStyles = ScaledSheet.create({
   right0: {
     right: 0,
   },
+  right3: {
+    right: '12@s',
+  },
   right6: {
     right: '24@s',
   },
@@ -548,7 +551,7 @@ const globalUtilStyles = ScaledSheet.create({
       },
       android: {
         elevation: 2,
-        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowColor: '#000',
       },
     }),
   },

@@ -16,6 +16,7 @@ export default function ForgotPasswordEmail() {
     control,
     formState: {errors},
     handleSubmit,
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       email: '',
@@ -24,6 +25,7 @@ export default function ForgotPasswordEmail() {
   });
   const onSubmit: SubmitHandler<FormValues> = data => {
     // do something
+    reset();
     router.push(`/(auth)/(forgotPassword)/verifyEmail?email=${data.email}`);
   };
   return (
@@ -77,7 +79,7 @@ export default function ForgotPasswordEmail() {
           <View style={[globalUtilStyles.wfull, globalUtilStyles.gap4]}>
             <CustomButton onPress={handleSubmit(onSubmit)} text="Next" />
             <CustomButton
-              onPress={() => router.navigate('/login')}
+              onPress={() => router.dismissTo('/login')}
               style={[bgColorStyle.white]}
               textStyle={{
                 size: 17,

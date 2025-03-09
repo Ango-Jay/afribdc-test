@@ -112,7 +112,6 @@ const CustomTextInput = ({
           globalUtilStyles.itemsCenter,
           globalUtilStyles.roundedlg,
           globalUtilStyles.px3,
-          globalUtilStyles.py2,
           inputStyle.inputContainerHeight,
           globalUtilStyles.boxShadow,
           animatedBorderStyle,
@@ -134,7 +133,11 @@ const CustomTextInput = ({
           //     ? "rgba(255, 255, 255, 0.60)"
           //     : "rgba(255, 255, 255, 0.40)"
           // }
-          style={[globalUtilStyles.flex1]}
+          style={[
+            globalUtilStyles.flex1,
+            globalUtilStyles.hfull,
+            globalUtilStyles.roundedlg,
+          ]}
         />
       </MotiView>
 
