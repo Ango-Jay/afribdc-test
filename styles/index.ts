@@ -479,6 +479,10 @@ const globalUtilStyles = ScaledSheet.create({
   roundedfull: {
     borderRadius: '9999@s',
   },
+  // rounded top
+  roundedtxl: {
+    borderTopEndRadius: '12@s',
+  },
   //   border width
   border0: {
     borderWidth: 0,

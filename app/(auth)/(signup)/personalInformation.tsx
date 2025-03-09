@@ -60,11 +60,11 @@ export default function PersonalInformation() {
       shouldValidate: true,
     });
     setStateOptions(
-      (getStates(option?.id.toLowerCase()!) as string[]).map(state => ({
+      (getStates(option?.id.toLowerCase()!) as string[])?.map(state => ({
         id: state,
         name: state,
         value: state,
-      })),
+      })) || [],
     );
   };
   const stateValue = values.state;

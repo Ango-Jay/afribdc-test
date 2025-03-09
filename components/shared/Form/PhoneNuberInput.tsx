@@ -1,12 +1,6 @@
 import {appColors} from '@/constants/Colors';
 import globalUtilStyles from '@/styles';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import {Dispatch, SetStateAction, useCallback, useState} from 'react';
 import {
   StyleSheet,
   Keyboard,
@@ -14,18 +8,14 @@ import {
   View,
   type TextInputProps,
   ViewStyle,
+  FlatList,
+  ListRenderItemInfo,
 } from 'react-native';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import CustomTextInput, {inputStyle} from './CustomInput';
 import CustomPressable from '../Button/Pressable';
 import ChevronIcon from '@/assets/icons/chevron.svg';
-import {
-  FlashList,
-  ListRenderItem,
-  ListRenderItemInfo,
-} from '@shopify/flash-list';
-import RNModal from 'react-native-modal';
-import {SCREEN_HEIGHT, SCREEN_WIDTH, STATUSBAR_HEIGHT} from '@/constants';
+import {SCREEN_HEIGHT, STATUSBAR_HEIGHT} from '@/constants';
 import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
 import CustomText from '../Text';
 import CustomImage from '../Image';
@@ -35,6 +25,7 @@ import {
   useGetCountries,
 } from '@/services/queries/useGetCountries';
 import BackButton from '../Button/BackButton';
+import ModalWrapper from '../utils/ModalWrapper';
 
 type PhoneNumber = {
   countryCode: string;
@@ -127,37 +118,40 @@ const CountrySelect = ({country, setCountry}: CountrySelectProps) => {
             globalUtilStyles.py2,
           ]}
           onPress={() => setShowModal(true)}>
-          {!!activeCountry?.icon && (
-            <>
-              <CustomImage
-                source={{uri: activeCountry.icon}}
-                style={[
-                  styles.countryFlagImage,
-                  globalUtilStyles.borderhalf,
-                  borderColorStyle['light-gray'],
-                ]}
-              />
-              <CustomText style={[textColorStyle.gray]}>
-                +{country.callingCode || '234'}
-              </CustomText>
-            </>
-          )}
+          <CustomImage
+            source={{uri: activeCountry?.icon}}
+            style={[
+              styles.countryFlagImage,
+              globalUtilStyles.borderhalf,
+              borderColorStyle['light-gray'],
+            ]}
+            isVisible={!activeCountry}
+          />
+          <CustomText style={[textColorStyle.gray]}>
+            +{country.callingCode}
+          </CustomText>
           <ChevronIcon />
         </CustomPressable>
       </View>
 
-      {showModal && (
-        <CountryListModal
-          isModalOpen={showModal}
-          selectItem={option => {
-            setCountry(option.callingCode, option.id);
-          }}
-          options={countries}
-          closeModal={() => {
-            setShowModal(false);
-          }}
-        />
-      )}
+      <ModalWrapper
+        isModalOpen={showModal}
+        closeModal={() => {
+          setShowModal(false);
+        }}
+        modalHeight={MODAL_HEIGHT}>
+        {showModal && (
+          <CountryListModal
+            selectItem={option => {
+              setCountry(option.callingCode, option.id);
+            }}
+            options={countries}
+            closeModal={() => {
+              setShowModal(false);
+            }}
+          />
+        )}
+      </ModalWrapper>
     </>
   );
 };
@@ -165,7 +159,6 @@ const CountrySelect = ({country, setCountry}: CountrySelectProps) => {
 interface CountryListModalProps {
   selectItem: (option: Country) => void;
   options: Country[];
-  isModalOpen: boolean;
   closeModal: () => void;
 }
 const MODAL_HEIGHT = (SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6;
@@ -173,7 +166,6 @@ export const CountryListModal = ({
   selectItem,
   options,
   closeModal,
-  isModalOpen,
 }: CountryListModalProps) => {
   const ViewHeight = useSharedValue(MODAL_HEIGHT);
   const [searchText, setSearchText] = useState('');
@@ -206,90 +198,58 @@ export const CountryListModal = ({
     [],
   );
   return (
-    <View
+    <Animated.View
       style={[
-        {
-          height: MODAL_HEIGHT,
-        },
-        globalUtilStyles.absolute,
+        globalUtilStyles.flex1,
+        bgColorStyle.white,
+        globalUtilStyles.roundedtxl,
+        globalUtilStyles.px4,
+        globalUtilStyles.pt6,
+        globalUtilStyles.pb8,
+        globalUtilStyles.wfull,
+        {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
       ]}>
-      <RNModal
-        style={{
-          justifyContent: 'flex-end',
-          margin: 0,
-        }}
-        isVisible={isModalOpen}
-        animationInTiming={500}
-        animationOutTiming={500}
-        backdropTransitionInTiming={800}
-        backdropTransitionOutTiming={800}
-        backdropOpacity={0.2}
-        backdropColor="#101010"
-        deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
-        onBackdropPress={() => closeModal()}
-        statusBarTranslucent
-        swipeDirection={'down'}
-        onSwipeComplete={closeModal}>
-        {/* <DismissKeyboard> */}
-        <Animated.View
+      <View style={[globalUtilStyles.wfull]}>
+        <View
           style={[
-            globalUtilStyles.flex1,
-            bgColorStyle.white,
-            globalUtilStyles.roundedxl,
-            globalUtilStyles.px4,
-            globalUtilStyles.pt6,
-            globalUtilStyles.pb8,
+            globalUtilStyles.flexRow,
+            globalUtilStyles.itemsCenter,
             globalUtilStyles.wfull,
-            {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
           ]}>
-          <View style={[globalUtilStyles.wfull]}>
-            <View
-              style={[
-                globalUtilStyles.flexRow,
-                globalUtilStyles.itemsCenter,
-                globalUtilStyles.wfull,
-              ]}>
-              <BackButton
-                onPress={closeModal}
-                style={globalUtilStyles.absolute}
-              />
-              <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
-                Select a Country
-              </CustomText>
-            </View>
-            <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
-              <CustomTextInput
-                value={searchText}
-                onFocus={() => {
-                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
-                }}
-                onBlur={() => {
-                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
-                }}
-                onChangeText={handleChangeSearchText}
-                placeholder={'Search for country'}
-                isSearch
-              />
-            </View>
-          </View>
-          <View style={[globalUtilStyles.flex1]}>
-            <FlashList
-              keyboardShouldPersistTaps="handled"
-              keyExtractor={item => item.id}
-              data={filteredOptions}
-              estimatedItemSize={63}
-              estimatedListSize={{
-                height: MODAL_HEIGHT - scale(70),
-                width: SCREEN_WIDTH,
-              }}
-              renderItem={renderItem}
-              ListEmptyComponent={<CustomText>No country found</CustomText>}
-            />
-          </View>
-        </Animated.View>
-        {/* </DismissKeyboard> */}
-      </RNModal>
-    </View>
+          <BackButton onPress={closeModal} style={globalUtilStyles.absolute} />
+          <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
+            Select a Country
+          </CustomText>
+        </View>
+        <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
+          <CustomTextInput
+            value={searchText}
+            onFocus={() => {
+              ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
+            }}
+            onBlur={() => {
+              ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
+            }}
+            onChangeText={handleChangeSearchText}
+            placeholder={'Search for country'}
+            isSearch
+          />
+        </View>
+      </View>
+      <View style={[globalUtilStyles.flex1]}>
+        <FlatList
+          keyboardShouldPersistTaps="handled"
+          keyExtractor={item => item.id}
+          data={filteredOptions}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            <CustomText style={[globalUtilStyles.textCenter]}>
+              No country found
+            </CustomText>
+          }
+        />
+      </View>
+    </Animated.View>
   );
 };
 interface RenderCountryListProps {

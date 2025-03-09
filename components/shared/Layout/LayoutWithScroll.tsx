@@ -11,16 +11,24 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'react-native-size-matters';
+import {DismissKeyboard} from './DismissKeyboard';
 
 interface Props {
   children: ReactNode;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   refreshControl?: ReactElement;
   backgroundColor?: string;
+  hideTouchable?: boolean;
 }
 export const LayoutWithScroll = forwardRef<ScrollView, Props>(
   (
-    {children, backgroundColor = 'white', onScroll, refreshControl}: Props,
+    {
+      children,
+      backgroundColor = 'white',
+      onScroll,
+      refreshControl,
+      hideTouchable,
+    }: Props,
     ref,
   ) => {
     const {top: safeAreaTop} = useSafeAreaInsets();
@@ -46,7 +54,11 @@ export const LayoutWithScroll = forwardRef<ScrollView, Props>(
           ]}
           onScroll={onScroll}
           refreshControl={refreshControl}>
-          {children}
+          {hideTouchable ? (
+            <>{children}</>
+          ) : (
+            <DismissKeyboard>{children}</DismissKeyboard>
+          )}
         </ScrollView>
       </SafeAreaView>
     );

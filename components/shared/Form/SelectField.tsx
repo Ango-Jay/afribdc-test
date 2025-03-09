@@ -15,14 +15,21 @@ import {MotiView} from 'moti';
 import CustomTextInput, {inputStyle} from './CustomInput';
 import CaretIcon from '@/assets/icons/caret_solid.svg';
 import CustomPressable from '../Button/Pressable';
-import {FlashList, ListRenderItemInfo} from '@shopify/flash-list';
 import RNModal from 'react-native-modal';
-import {SCREEN_HEIGHT, SCREEN_WIDTH, STATUSBAR_HEIGHT} from '@/constants';
-import {Keyboard, TouchableHighlight, View} from 'react-native';
+import {SCREEN_HEIGHT, STATUSBAR_HEIGHT} from '@/constants';
+import {
+  FlatList,
+  Keyboard,
+  type ListRenderItemInfo,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import BackButton from '../Button/BackButton';
 import CustomImage from '../Image';
 import {StyleSheet} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import {DismissKeyboard} from '../Layout/DismissKeyboard';
+import ModalWrapper from '../utils/ModalWrapper';
 
 interface Props {
   labelTitle: string;
@@ -127,30 +134,28 @@ const SelectField = ({
           </CustomPressable>
         </MotiView>
       </Animated.View>
-      {show && (
-        <OptionsList
-          isModalOpen={show}
-          closeModal={() => setShow(false)}
-          options={options}
-          selectOption={selectOption}
-        />
-      )}
+      <ModalWrapper
+        isModalOpen={show}
+        closeModal={() => setShow(false)}
+        modalHeight={MODAL_HEIGHT}>
+        {show && (
+          <OptionsList
+            closeModal={() => setShow(false)}
+            options={options}
+            selectOption={selectOption}
+          />
+        )}
+      </ModalWrapper>
     </>
   );
 };
 
 interface OptionsListProps {
-  isModalOpen: boolean;
   closeModal: () => void;
   options: Option[];
   selectOption: (value: string, option?: Option) => void;
 }
-const OptionsList = ({
-  isModalOpen,
-  closeModal,
-  options,
-  selectOption,
-}: OptionsListProps) => {
+const OptionsList = ({closeModal, options, selectOption}: OptionsListProps) => {
   const ViewHeight = useSharedValue(MODAL_HEIGHT);
   const [searchText, setSearchText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -208,88 +213,57 @@ const OptionsList = ({
     [],
   );
   return (
-    <View
+    <Animated.View
       style={[
-        {
-          height: MODAL_HEIGHT,
-        },
-        globalUtilStyles.absolute,
+        globalUtilStyles.flex1,
+        bgColorStyle.white,
+        globalUtilStyles.roundedtxl,
+        globalUtilStyles.px4,
+        globalUtilStyles.pt6,
+        globalUtilStyles.pb8,
+        {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
       ]}>
-      <RNModal
-        style={{
-          justifyContent: 'flex-end',
-          margin: 0,
-        }}
-        isVisible={isModalOpen}
-        animationInTiming={500}
-        animationOutTiming={500}
-        backdropTransitionInTiming={800}
-        backdropTransitionOutTiming={800}
-        backdropOpacity={0.2}
-        backdropColor="#101010"
-        deviceHeight={SCREEN_HEIGHT - STATUSBAR_HEIGHT}
-        onBackdropPress={() => closeModal()}
-        statusBarTranslucent
-        swipeDirection={'down'}
-        onSwipeComplete={closeModal}>
-        {/* <DismissKeyboard> */}
-        <Animated.View
+      <View style={[globalUtilStyles.wfull]}>
+        <View
           style={[
-            globalUtilStyles.flex1,
-            bgColorStyle.white,
-            globalUtilStyles.roundedxl,
-            globalUtilStyles.px4,
-            globalUtilStyles.pt6,
-            globalUtilStyles.pb8,
-            {height: ViewHeight, maxHeight: ViewHeight, minHeight: 20},
+            globalUtilStyles.flexRow,
+            globalUtilStyles.itemsCenter,
+            globalUtilStyles.wfull,
           ]}>
-          <View style={[globalUtilStyles.wfull]}>
-            <View
-              style={[
-                globalUtilStyles.flexRow,
-                globalUtilStyles.itemsCenter,
-                globalUtilStyles.wfull,
-              ]}>
-              <BackButton
-                onPress={closeModal}
-                style={globalUtilStyles.absolute}
-              />
-              <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
-                Select option
-              </CustomText>
-            </View>
-            <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
-              <CustomTextInput
-                value={searchText}
-                onFocus={() => {
-                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
-                }}
-                onBlur={() => {
-                  ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
-                }}
-                onChangeText={handleChangeSearchText}
-                placeholder={'Search for option'}
-                isSearch
-              />
-            </View>
-          </View>
-          <View style={[globalUtilStyles.flex1]}>
-            <FlashList
-              keyboardShouldPersistTaps="handled"
-              keyExtractor={item => item.id}
-              data={filteredOptions}
-              estimatedItemSize={58}
-              estimatedListSize={{
-                height: MODAL_HEIGHT - scale(70),
-                width: SCREEN_WIDTH,
-              }}
-              renderItem={renderItem}
-            />
-          </View>
-        </Animated.View>
-        {/* </DismissKeyboard> */}
-      </RNModal>
-    </View>
+          <BackButton onPress={closeModal} style={globalUtilStyles.absolute} />
+          <CustomText weight={500} style={[globalUtilStyles.mxauto]}>
+            Select option
+          </CustomText>
+        </View>
+        <View style={[globalUtilStyles.wfull, globalUtilStyles.my4]}>
+          <CustomTextInput
+            value={searchText}
+            onFocus={() => {
+              ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.95);
+            }}
+            onBlur={() => {
+              ViewHeight.value = withTiming(SCREEN_HEIGHT * 0.6);
+            }}
+            onChangeText={handleChangeSearchText}
+            placeholder={'Search for option'}
+            isSearch
+          />
+        </View>
+      </View>
+      <View style={[globalUtilStyles.flex1]}>
+        <FlatList
+          keyboardShouldPersistTaps="handled"
+          keyExtractor={item => item.id}
+          data={filteredOptions}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            <CustomText style={[globalUtilStyles.textCenter]}>
+              No option found
+            </CustomText>
+          }
+        />
+      </View>
+    </Animated.View>
   );
 };
 const MODAL_HEIGHT = (SCREEN_HEIGHT - STATUSBAR_HEIGHT) * 0.6;
