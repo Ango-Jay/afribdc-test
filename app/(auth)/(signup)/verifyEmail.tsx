@@ -4,6 +4,7 @@ import CustomPressable from '@/components/shared/Button/Pressable';
 import {PinFieldGroup, PinKeypad} from '@/components/shared/Form/Pin';
 import {LayoutWithScroll} from '@/components/shared/Layout/LayoutWithScroll';
 import CustomText from '@/components/shared/Text';
+import {displayToast} from '@/components/shared/toast-utils/displayToast';
 import CountdownTimer from '@/components/shared/utils/CountdownTimer';
 import {OTP_EXPIRY_TIME} from '@/constants';
 import globalUtilStyles from '@/styles';
@@ -17,6 +18,10 @@ export default function VerifyEmailSignUp() {
   const {email} = useLocalSearchParams<{email: string}>();
   const [otp, setOtp] = useState<string[]>([]);
   const onSubmit = () => {
+    displayToast({
+      type: 'success',
+      message: 'Account creation successful',
+    });
     router.push('/(auth)/(signup)/personalInformation');
   };
   const isSubmitButtonDisabled = otp.length < 6;

@@ -78,6 +78,7 @@ const PhoneNumberInput = ({
       />
       <CustomTextInput
         {...props}
+        keyboardType="numeric"
         value={phoneNumber.number}
         onChangeText={setPhoneNumberInput}
         containerStyle={[globalUtilStyles.flex1] as unknown as ViewStyle}

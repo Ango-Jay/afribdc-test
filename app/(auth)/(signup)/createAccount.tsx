@@ -11,7 +11,6 @@ import {textColorStyle} from '@/styles/color';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {router} from 'expo-router';
-import {displayToast} from '@/components/shared/toast-utils/displayToast';
 
 export default function CreateAccount() {
   const {
@@ -29,10 +28,6 @@ export default function CreateAccount() {
   });
   const onSubmit: SubmitHandler<FormValues> = data => {
     // do something
-    displayToast({
-      type: 'success',
-      message: 'Account creation successful',
-    });
     router.push(`/(auth)/(signup)/verifyEmail?email=${data.email}`);
   };
   return (
@@ -144,7 +139,16 @@ export default function CreateAccount() {
 }
 
 const validationSchema = yup.object({
-  email: yup.string().required('Required'),
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .test('test-email', 'Please enter a valid email', function (value) {
+      const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+      if (value) {
+        return regex.test(value);
+      }
+    })
+    .required('Required'),
   userName: yup.string().required('Required'),
   password: yup
     .string()
