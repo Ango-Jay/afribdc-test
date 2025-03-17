@@ -1,5 +1,9 @@
 # Afribdc-test
 
+
+https://github.com/user-attachments/assets/85b93599-5608-43f4-98ed-e99433f72252
+
+
 This is a sample app that displays a user onboarding and kyc journey
 
 ## Get started
